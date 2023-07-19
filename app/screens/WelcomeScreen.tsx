@@ -11,12 +11,27 @@ import { AppStackScreenProps } from "../navigators" // @demo remove-current-line
 import { colors, spacing } from "../theme"
 import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
+import { useAuth0 } from 'react-native-auth0';
 
 const welcomeLogo = require("../../assets/images/logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
+const LogOutButton = () => {
+  const {clearSession} = useAuth0();
+
+  const onPress = async () => {
+    try {
+      console.log('Log out');
+      await clearSession();
+    } catch (e) {
+      console.log('Log out cancelled');
+    }
+  };
+
+  return <Button onPress={onPress}  tx="common.logOut" />
+}
 export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
   _props, // @demo remove-current-line
 ) {
@@ -44,6 +59,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   return (
     <View style={$container}>
       <View style={$topContainer}>
+        <LogOutButton/>
         <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
         <Text
           testID="welcome-heading"

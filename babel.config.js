@@ -20,6 +20,18 @@ const plugins = [
   "@babel/plugin-proposal-export-namespace-from",
   /** NOTE: This must be last in the plugins @see https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/installation/#babel-plugin */
   "react-native-reanimated/plugin",
+  ["module:react-native-dotenv", {
+    "envName": "APP_ENV",
+    "moduleName": "@env",
+    "path": ".env",
+    "blocklist": null,
+    "allowlist": null,
+    "blacklist": null, // DEPRECATED
+    "whitelist": null, // DEPRECATED
+    "safe": false,
+    "allowUndefined": true,
+    "verbose": false
+  }]
 ]
 
 /** @type {import('@babel/core').TransformOptions} */

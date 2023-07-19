@@ -1,12 +1,47 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect, useMemo, useRef, useState } from "react"
-import { TextInput, TextStyle, ViewStyle } from "react-native"
+import { TextInput, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
 import { useStores } from "../models"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
+import { useAuth0 } from 'react-native-auth0';
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
+
+const Profile = () => {
+  const {user, error, isLoading} = useAuth0();
+  if(isLoading) {
+    return (
+      <View>
+        <Text>SDK is Loading</Text>
+      </View>
+    )
+  }
+  console.log(error)
+  return (
+    <>
+      {user && <Text>Logged in as {user.name}</Text>}
+      {!user && <Text>Not logged in</Text>}
+      {error && <Text>{error.message}</Text>}
+    </>
+  )
+}
+const LoginButton = () => {
+  const {authorize, getCredentials} = useAuth0();
+
+  const onPress = async () => {
+    try {
+      await authorize({scope: 'openid profile email'});
+      const {accessToken} = await getCredentials();
+      console.log(accessToken)
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  return <Button onPress={onPress}  tx="loginScreen.tapToSignIn" />
+}
 
 export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
   const authPasswordInput = useRef<TextInput>()
@@ -73,6 +108,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       contentContainerStyle={$screenContentContainer}
       safeAreaEdges={["top", "bottom"]}
     >
+      <Profile/>
       <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
       <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
       {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
@@ -106,6 +142,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         onSubmitEditing={login}
         RightAccessory={PasswordRightAccessory}
       />
+      <LoginButton/>
 
       <Button
         testID="login-button"
