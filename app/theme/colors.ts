@@ -1,4 +1,5 @@
-// TODO: write documentation for colors and palette in own markdown file and add links from here
+// TODO: write documentation for colors and palette in own markdown
+//  file and add links from here
 
 const palette = {
   neutral100: "#FFFFFF",
@@ -35,6 +36,14 @@ const palette = {
 
   overlay20: "rgba(25, 16, 21, 0.2)",
   overlay50: "rgba(25, 16, 21, 0.5)",
+
+  on_secondary_fixed_variant: "#4A4458",
+  m_3_sys_light_inverse_surface: "#322F35",
+  m_3_sys_light_surface_container_high: "#ECE6F0",
+  aqua_sky: "#46A8C7",
+  facebook_logo_background_color: "#1877F2",
+  google_logo_background__color: "#FFFFFF",
+  apple_logo_background__color: "#000000",
 } as const
 
 export const colors = {
@@ -59,7 +68,7 @@ export const colors = {
   /**
    * The default color of the screen background.
    */
-  background: palette.neutral200,
+  background: palette.neutral100,
   /**
    * The default border color.
    */

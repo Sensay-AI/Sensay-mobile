@@ -1,4 +1,4 @@
-const en = {
+const vi = {
   common: {
     ok: "OK!",
     cancel: "Cancel",
@@ -28,59 +28,49 @@ const en = {
   },
   // @demo remove-block-start
   errors: {
-    invalidEmail: "must be a valid email address.",
-    blankText: "can't be blank",
-    emailLength: "must be at least 6 characters"
+    invalidEmail: "Địa chỉ email không hợp lệ.",
+    blankText: "Không được bỏ trống.",
+    emailLength: "địa chỉ email phải ít nhất 6 kí tự."
   },
   loginScreen: {
-    signIn: "Sign In",
-    signUp: "Sign Up?",
-    forgotPassword: "Forgot Password",
+    signIn: "Đăng nhập",
+    signUp: "Đăng Ký?",
+    forgotPassword: "Quên mật khẩu",
     enterDetails:
       "Enter your details below to unlock top secret info. You'll never guess what we've got waiting. Or maybe you will; it's not rocket science here.",
-    emailFieldLabel: "Email",
-    passwordFieldLabel: "Password",
-    emailFieldPlaceholder: "Enter your email address",
-    passwordFieldPlaceholder: "Super secret password here",
-    tapToSignIn: "Log In",
-    hint: "Hint: you can use any email address and your favorite password :)",
-    continueWithFacebook: "Continue with Facebook",
-    continueWithGoogle: "Continue with Google",
-    continueWithApple: "Continue with Apple",
+    emailFieldLabel: "Tên đăng nhập",
+    passwordFieldLabel: "Mật khẩu",
+    emailFieldPlaceholder: "Nhập địa chỉ email của bạn",
+    passwordFieldPlaceholder: "Nhập mật khẩu của bạn",
+    tapToSignIn: "Đăng Nhập",
+    hint: "Hint: bạn đã đăng nhập không thành công 2 lần, vui lòng kiểm tra lại email và mật khẩu",
+    continueWithFacebook: "Tiếp tục với Facebook",
+    continueWithGoogle: "Tiếp tục với Google",
+    continueWithApple: "Tiếp tục với Apple",
   },
   updateProfileScreen: {
-    changeAvatar: "Change avatar",
-    email: "Email Address",
-    name: "Name",
+    changeAvatar: "Đổi ảnh đại diện",
+    email: "Địa chỉ Email",
+    name: "Tên đầy đủ",
     nickName: "Nick name",
+    phoneNumber: "Số điện thoại",
 
-    dateOfBirth: "Date of Birth (MM/DD/YYYY)",
-    country: "Country",
-    phoneNumber: "Phone number",
+    dateOfBirth: "Ngày tháng năm sinh (MM/DD/YYYY)",
+    country: "Quốc tịch",
+    yourLanguage: "Ngôn ngữ bản xứ của bạn",
+    userName: "Tên đăng nhập",
 
-    yourLanguage: "Your language",
-    userName: "Your user name",
     gender: {
-      header: "Gender",
-      male: "Male",
-      female: "Female",
-      other: "Other",
-      preferNotToSay: "I'm prefer not to say",
+      header: "Giới tính",
+      male: "Nam",
+      female: "Nữ",
+      other: "Khác",
+      preferNotToSay: "Tôi không muốn chia sẻ thông tin này",
     },
     validation: {
-      email: "Please enter a valid email",
-      emailRequire: "*Email Address is Required",
-      fullNameRequire: "*Full name is Required",
-      dateOfBirthRequire: "*Date of birth is required",
-      minDateOfBirth: "Please select a day after 1/1/1900",
-      countryRequire: "*Country is Required",
-      languagesRequire: "*Languages is Required",
-      minLanguages: "Must have at least 1 language selected",
-      nickNameRequire: "*Nick name is Required",
-      genderRequire: "*Gender is Required",
-      phoneNumberValid: "Please enter a valid phone number",
-      phoneNumberRequire: "*Phone number is Required",
-
+      email: "Vui lòng nhập địa chỉ email hợp lệ",
+      emailRequire: "*Địa chỉ Email là bắt buộc",
+      minLanguages: "Bạn phải chọn ít nhất 1 ngôn ngữ"
     }
   },
   demoNavigator: {
@@ -88,22 +78,22 @@ const en = {
     debugTab: "Debug",
     communityTab: "Community",
     podcastListTab: "Podcast",
-    overviewTab: "Overview",
-    statisticsTab: "Statistics",
-    devicesTab: "Devices",
-    settingsTab: "Settings",
+    overviewTab: "Tổng quan",
+    statisticsTab: "Thống kê",
+    devicesTab: "Thiết bị",
+    settingsTab: "Cài đặt",
   },
   overviewScreen: {
-    todayEnergy: "Today's Energy (kWh)",
-    monthEnergy: "This month's Energy (kWh)",
-    yearEnergy: "This year's Energy (kWh)",
-    totalEnergy: "Total Energy (kWh)",
-    todayRevenue: "Today's Revenue",
-    monthRevenue: "This month's Revenue",
-    yearRevenue: "This year's Revenue",
-    totalRevenue: "Total Revenue",
-    carbonOffset: "Carbon Offset (Tons)",
-    currentPower: "Current Power (kW)",
+    todayEnergy: "Sản lượng hôm nay (kWh)",
+    monthEnergy: "Sản lượng tháng này(kWh)",
+    yearEnergy: "Sản lượng năm nay (kWh)",
+    totalEnergy: "Tổng Sản lượng (kWh)",
+    todayRevenue: "Doanh thu hôm nay",
+    monthRevenue: "Doanh thu tháng này",
+    yearRevenue: "Doanh thu năm nay",
+    totalRevenue: "Tổng Doanh thu",
+    carbonOffset: "Đã giảm thiểu CO2 (Tons)",
+    currentPower: "Công suất hiện tại (kW)",
     basicInfoMenuItem: "Basic Information"
   },
   demoCommunityScreen: {
@@ -181,5 +171,5 @@ const en = {
   // @demo remove-block-end
 }
 
-export default en
-export type Translations = typeof en
+export default vi
+export type Translations = typeof vi
