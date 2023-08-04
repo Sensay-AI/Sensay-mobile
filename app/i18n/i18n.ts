@@ -6,6 +6,7 @@ import { I18nManager } from "react-native"
 import en, { Translations } from "./en"
 import ar from "./ar"
 import ko from "./ko"
+import vi from "./vi"
 
 i18n.fallbacks = true
 /**
@@ -13,12 +14,15 @@ i18n.fallbacks = true
  * the language code is the suffixed with "-US". i.e. if a device is set to English ("en"),
  * if you change to another language and then return to English language code is now "en-US".
  */
-i18n.translations = { ar, en, "en-US": en, ko }
+i18n.translations = { ar, en, "en-US": en, ko, vi }
 
 i18n.locale = Localization.locale
 
 // handle RTL languages
-export const isRTL = Localization.isRTL
+const locales = Localization.getLocales();
+export const isRTL = locales.some(
+  (locale) => locale.textDirection === 'rtl'
+); // Add other RTL languages if needed.
 I18nManager.allowRTL(isRTL)
 I18nManager.forceRTL(isRTL)
 

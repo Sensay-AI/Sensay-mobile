@@ -1,184 +1,222 @@
 import { observer } from "mobx-react-lite"
-import React, { FC, useEffect, useMemo, useRef, useState } from "react"
-import { TextInput, TextStyle, View, ViewStyle } from "react-native"
-import { Button, Icon, Screen, Text, TextField, TextFieldAccessoryProps } from "../components"
-import { useStores } from "../models"
+import React, { FC } from "react"
+import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import {
+  Button as IgniteButton, Icon,
+  Menu, MenuItem,
+  Screen, Text,
+
+} from "../components"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
-import { useAuth0 } from 'react-native-auth0';
+import { Button, IconButton } from "react-native-paper"
+import i18n from "i18n-js"
+import { useAuth0 } from "react-native-auth0"
+import { AUTH0_AUDIENCE, AUTH0_AUTHORIZE_SCOPE } from "@env"
+import { SENSAYAI_LOGO } from "../utils/images"
+import { useStores } from "../models"
 
-interface LoginScreenProps extends AppStackScreenProps<"Login"> {}
-
-const Profile = () => {
-  const {user, error, isLoading} = useAuth0();
-  if(isLoading) {
-    return (
-      <View>
-        <Text>SDK is Loading</Text>
-      </View>
-    )
-  }
-  console.log(error)
-  return (
-    <>
-      {user && <Text>Logged in as {user.name}</Text>}
-      {!user && <Text>Not logged in</Text>}
-      {error && <Text>{error.message}</Text>}
-    </>
-  )
-}
-const LoginButton = () => {
-  const {authorize, getCredentials} = useAuth0();
-
-  const onPress = async () => {
-    try {
-      await authorize({scope: 'openid profile email'});
-      const {accessToken} = await getCredentials();
-      console.log(accessToken)
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  return <Button onPress={onPress}  tx="loginScreen.tapToSignIn" />
+interface LoginScreenProps extends AppStackScreenProps<"Login"> {
 }
 
+type SocialConnectionTypes = "google-oauth2" | "facebook" | "apple"
 export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
-  const authPasswordInput = useRef<TextInput>()
 
-  const [authPassword, setAuthPassword] = useState("")
-  const [isAuthPasswordHidden, setIsAuthPasswordHidden] = useState(true)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [attemptsCount, setAttemptsCount] = useState(0)
+  const [languageMenuVisible, setLanguageMenuVisible] = React.useState(false)
+  const openLanguageMenu = () => setLanguageMenuVisible(true)
+  const closeLanguageMenu = () => setLanguageMenuVisible(false)
+
   const {
-    authenticationStore: { authEmail, setAuthEmail, setAuthToken, validationError },
+    authenticationStore: { setAuthToken},
   } = useStores()
+  const languageMenuItems = [
+    new MenuItem("vietnamese", () => {
+      i18n.locale = "vi"
+      closeLanguageMenu()
+    }),
+    new MenuItem("english", () => {
+      i18n.locale = "en"
+      closeLanguageMenu()
+    }),
+    new MenuItem("korean", () => {
+      i18n.locale = "ko"
+      closeLanguageMenu()
+    }),
+    new MenuItem("arabic", () => {
+      i18n.locale = "ar"
+      closeLanguageMenu()
+    }),
+  ]
+  const { authorize, error, getCredentials } = useAuth0()
 
-  useEffect(() => {
-    // Here is where you could fetch credentials from keychain or storage
-    // and pre-fill the form fields.
-    setAuthEmail("ignite@infinite.red")
-    setAuthPassword("ign1teIsAwes0m3")
-  }, [])
+  async function authorizeWithSocial(connectionType: SocialConnectionTypes): Promise<void> {
+    try {
+      await authorize({ scope: AUTH0_AUTHORIZE_SCOPE, audience: AUTH0_AUDIENCE, connection: connectionType })
+      if (error) {
+        console.log(error)
+        return
+      }
+      const credentials = await getCredentials()
+      if (credentials) {
+        setAuthToken(credentials.toString())
+      }
+    } catch (e) {
+      console.log(e)
+    }
 
-  const error = isSubmitted ? validationError : ""
-
-  function login() {
-    setIsSubmitted(true)
-    setAttemptsCount(attemptsCount + 1)
-
-    if (validationError) return
-
-    // Make a request to your server to get an authentication token.
-    // If successful, reset the fields and set the token.
-    setIsSubmitted(false)
-    setAuthPassword("")
-    setAuthEmail("")
-
-    // We'll mock this with a fake token.
-    setAuthToken(String(Date.now()))
+    // console.log("user: ",user)
+    // setUserInfo(user)
   }
 
-  const PasswordRightAccessory = useMemo(
-    () =>
-      function PasswordRightAccessory(props: TextFieldAccessoryProps) {
-        return (
-          <Icon
-            icon={isAuthPasswordHidden ? "view" : "hidden"}
-            color={colors.palette.neutral800}
-            containerStyle={props.style}
-            size={20}
-            onPress={() => setIsAuthPasswordHidden(!isAuthPasswordHidden)}
-          />
-        )
-      },
-    [isAuthPasswordHidden],
-  )
+  async function loginWithFacebook(): Promise<void> {
+    await authorizeWithSocial("facebook")
+  }
 
-  useEffect(() => {
-    return () => {
-      setAuthPassword("")
-      setAuthEmail("")
-    }
-  }, [])
+  async function loginWithGoogle(): Promise<void> {
+    await authorizeWithSocial("google-oauth2")
+  }
 
+  async function loginWithApple(): Promise<void> {
+    await authorizeWithSocial("apple")
+  }
+
+  const allowLanguagePrefix = ["en", "vi", "ko", "ar"]
   return (
     <Screen
       preset="auto"
       contentContainerStyle={$screenContentContainer}
       safeAreaEdges={["top", "bottom"]}
+      KeyboardAvoidingViewProps={{ behavior: "padding" }}
     >
-      <Profile/>
-      <Text testID="login-heading" tx="loginScreen.signIn" preset="heading" style={$signIn} />
-      <Text tx="loginScreen.enterDetails" preset="subheading" style={$enterDetails} />
-      {attemptsCount > 2 && <Text tx="loginScreen.hint" size="sm" weight="light" style={$hint} />}
+      <View style={$topButtonGroupContainerStyle}>
+        <View>
+          <Menu
+            visible={languageMenuVisible}
+            setVisible={setLanguageMenuVisible}
+            onDismiss={closeLanguageMenu}
+            menuItems={languageMenuItems}
+            anchor={
+              <Button icon="menu-down" mode="text" style={$languageButton}
+                      contentStyle={$languageButtonContentStyle}
+                      onPress={openLanguageMenu}
+              >
+                <Text> {allowLanguagePrefix.includes(i18n.locale.substring(0, 2).toLowerCase()) && i18n.locale.substring(0, 2) || "en"} </Text>
+              </Button>
+            }></Menu>
+        </View>
+        <View style={$settingIconButtonContainerStyle}>
+          <IconButton icon="cog" size={20} onPress={() => console.log("Pressed")} />
+        </View>
+      </View>
+      <View style={$topContainer}>
+        <Image style={$welcomeLogo} source={{ uri: SENSAYAI_LOGO }} resizeMode="contain" />
+      </View>
+      <View style={$loginButtonContainerStyle}>
+        <IgniteButton
+          testID="login-button"
+          tx="loginScreen.continueWithFacebook"
+          style={$tapButtonWithFacebook}
+          preset="reversed"
+          onPress={loginWithFacebook}
+          LeftAccessory={(_) => <Icon icon="facebook" containerStyle={{ paddingRight: 15 } as ViewStyle} />}
+        ></IgniteButton>
 
-      <TextField
-        value={authEmail}
-        onChangeText={setAuthEmail}
-        containerStyle={$textField}
-        autoCapitalize="none"
-        autoComplete="email"
-        autoCorrect={false}
-        keyboardType="email-address"
-        labelTx="loginScreen.emailFieldLabel"
-        placeholderTx="loginScreen.emailFieldPlaceholder"
-        helper={error}
-        status={error ? "error" : undefined}
-        onSubmitEditing={() => authPasswordInput.current?.focus()}
-      />
+        <IgniteButton
+          testID="login-button"
+          tx="loginScreen.continueWithGoogle"
+          textStyle={{ color: colors.text } as TextStyle}
+          style={$tapButtonWithGoogle}
+          preset="reversed"
+          onPress={loginWithGoogle}
+          LeftAccessory={(_) => <Icon icon="google" containerStyle={{ paddingRight: 15 } as ViewStyle} />}
+        ></IgniteButton>
+        <IgniteButton
+          testID="login-button"
+          tx="loginScreen.continueWithApple"
+          style={$tapButtonWithApple}
+          preset="reversed"
+          onPress={loginWithApple}
+          LeftAccessory={(_) => <Icon icon="apple" containerStyle={{ paddingRight: 15 } as ViewStyle} />}
+        ></IgniteButton>
+      </View>
 
-      <TextField
-        ref={authPasswordInput}
-        value={authPassword}
-        onChangeText={setAuthPassword}
-        containerStyle={$textField}
-        autoCapitalize="none"
-        autoComplete="password"
-        autoCorrect={false}
-        secureTextEntry={isAuthPasswordHidden}
-        labelTx="loginScreen.passwordFieldLabel"
-        placeholderTx="loginScreen.passwordFieldPlaceholder"
-        onSubmitEditing={login}
-        RightAccessory={PasswordRightAccessory}
-      />
-      <LoginButton/>
-
-      <Button
-        testID="login-button"
-        tx="loginScreen.tapToSignIn"
-        style={$tapButton}
-        preset="reversed"
-        onPress={login}
-      />
     </Screen>
   )
 })
 
 const $screenContentContainer: ViewStyle = {
-  paddingVertical: spacing.xxl,
+  paddingVertical: spacing.xl,
   paddingHorizontal: spacing.lg,
 }
 
-const $signIn: TextStyle = {
-  marginBottom: spacing.sm,
-}
-
-const $enterDetails: TextStyle = {
-  marginBottom: spacing.lg,
-}
-
-const $hint: TextStyle = {
-  color: colors.tint,
-  marginBottom: spacing.md,
-}
-
-const $textField: ViewStyle = {
-  marginBottom: spacing.lg,
-}
-
-const $tapButton: ViewStyle = {
+const $tapButtonWithFacebook: ViewStyle = {
   marginTop: spacing.xs,
+  backgroundColor: colors.palette.facebook_logo_background_color,
+  borderRadius: 10,
+  width: 345,
+  justifyContent: "flex-start",
 }
 
-// @demo remove-file
+const $tapButtonWithGoogle: ViewStyle = {
+  marginTop: spacing.xs,
+  backgroundColor: colors.palette.google_logo_background__color,
+  borderRadius: 10,
+  width: 345,
+  justifyContent: "flex-start",
+  // shadow definition
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 10,
+  },
+  shadowOpacity: 0.51,
+  shadowRadius: 13.16,
+  elevation: 20,
+  overflow: 'visible'
+}
+
+const $tapButtonWithApple: ViewStyle = {
+  marginTop: spacing.xs,
+  backgroundColor: colors.palette.apple_logo_background__color,
+  borderRadius: 10,
+  width: 345,
+  justifyContent: "flex-start",
+}
+
+const $languageButton: ViewStyle = {
+  flexWrap: "wrap",
+}
+
+const $languageButtonContentStyle: ViewStyle = {
+  flexDirection: "row-reverse",
+  justifyContent: "flex-end",
+}
+const $settingIconButtonContainerStyle: ViewStyle = {
+  flex: 1,
+  flexDirection: "row",
+  justifyContent: "flex-end",
+}
+const $loginButtonContainerStyle: ViewStyle = {
+  flex: 1,
+  flexDirection: "column",
+  justifyContent: "center",
+  marginTop: spacing.lg,
+  gap: spacing.xxs
+}
+const $topButtonGroupContainerStyle: ViewStyle = {
+  flexDirection: "row",
+}
+
+const $topContainer: ViewStyle = {
+  flexShrink: 1,
+  flexGrow: 1,
+  flexBasis: "57%",
+  justifyContent: "center",
+  paddingHorizontal: spacing.lg,
+  marginTop: spacing.xl,
+}
+const $welcomeLogo: ImageStyle = {
+  height: 250,
+  width: "100%",
+  marginBottom: spacing.xxl,
+}

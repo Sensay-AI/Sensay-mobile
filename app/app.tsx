@@ -10,6 +10,8 @@
  * The app navigation resides in ./app/navigators, so head over there
  * if you're interested in adding screens and navigators.
  */
+import { PaperProvider } from "react-native-paper"
+
 if (__DEV__) {
   // Load Reactotron configuration in development. We don't want to
   // include this in our production bundle, so we are using `if (__DEV__)`
@@ -24,7 +26,7 @@ import { initialWindowMetrics, SafeAreaProvider } from "react-native-safe-area-c
 import * as Linking from "expo-linking"
 import { useInitialRootStore } from "./models"
 import { AppNavigator, useNavigationPersistence } from "./navigators"
-import { ErrorBoundary } from "./screens/ErrorScreen/ErrorBoundary"
+import { ErrorBoundary } from "./screens"
 import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
 import Config from "./config"
@@ -101,6 +103,7 @@ function App(props: AppProps) {
 
   // otherwise, we're ready to render the app
   return (
+    <PaperProvider>
     <Auth0Provider domain={auth0Config.domain} clientId={auth0Config.clientId}>
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
       <ErrorBoundary catchErrors={Config.catchErrors}>
@@ -112,6 +115,7 @@ function App(props: AppProps) {
       </ErrorBoundary>
     </SafeAreaProvider>
     </Auth0Provider>
+    </PaperProvider>
   )
 }
 
