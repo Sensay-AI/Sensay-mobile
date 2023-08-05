@@ -5,13 +5,12 @@ import {
   Button as IgniteButton, Icon,
   Menu, MenuItem,
   Screen, Text,
-
 } from "../components"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 import { Button, IconButton } from "react-native-paper"
 import i18n from "i18n-js"
-import { useAuth0 } from "react-native-auth0"
+import { Credentials, useAuth0 } from "react-native-auth0"
 import { AUTH0_AUDIENCE, AUTH0_AUTHORIZE_SCOPE } from "@env"
 import { SENSAYAI_LOGO } from "../utils/images"
 import { useStores } from "../models"
@@ -25,9 +24,12 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const [languageMenuVisible, setLanguageMenuVisible] = React.useState(false)
   const openLanguageMenu = () => setLanguageMenuVisible(true)
   const closeLanguageMenu = () => setLanguageMenuVisible(false)
+  // const navigation = useNavigation()
 
+  const { navigation } = _props
   const {
-    authenticationStore: { setAuthToken},
+    authenticationStore: { setAuthToken, distributeAuthToken },
+    userStore: { fetchUser },
   } = useStores()
   const languageMenuItems = [
     new MenuItem("vietnamese", () => {
@@ -53,19 +55,26 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     try {
       await authorize({ scope: AUTH0_AUTHORIZE_SCOPE, audience: AUTH0_AUDIENCE, connection: connectionType })
       if (error) {
-        console.log(error)
+        console.log("auth0 error: ", error)
         return
       }
-      const credentials = await getCredentials()
+      const credentials: Credentials = await getCredentials()
       if (credentials) {
-        setAuthToken(credentials.toString())
+        setAuthToken(credentials)
+        distributeAuthToken(credentials.accessToken)
+        await fetchUser()
+          .then(() => {
+            console.log("welcome")
+            navigation.push("Welcome")
+          })
+          .catch((err) => {
+          console.log("fetchUser err", err)
+          navigation.push("UpdateProfile")
+        })
       }
     } catch (e) {
       console.log(e)
     }
-
-    // console.log("user: ",user)
-    // setUserInfo(user)
   }
 
   async function loginWithFacebook(): Promise<void> {
@@ -172,7 +181,7 @@ const $tapButtonWithGoogle: ViewStyle = {
   shadowOpacity: 0.51,
   shadowRadius: 13.16,
   elevation: 20,
-  overflow: 'visible'
+  overflow: "visible",
 }
 
 const $tapButtonWithApple: ViewStyle = {
@@ -201,7 +210,7 @@ const $loginButtonContainerStyle: ViewStyle = {
   flexDirection: "column",
   justifyContent: "center",
   marginTop: spacing.lg,
-  gap: spacing.xxs
+  gap: spacing.xxs,
 }
 const $topButtonGroupContainerStyle: ViewStyle = {
   flexDirection: "row",

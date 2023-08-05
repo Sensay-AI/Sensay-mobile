@@ -7,10 +7,11 @@ const vi = {
   },
   welcomeScreen: {
     postscript:
-      "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
+      "Chào mừng đến với SensayAI, ứng dụng học ngôn ngữ trí tuệ nhân tạo! Bài học cá nhân, bài tập tương tác, cộng đồng toàn cầu. Thông thạo ngôn ngữ dễ dàng. Bắt đầu ngay!",
     readyForLaunch: "Your app, almost ready for launch!",
     exciting: "(ohh, this is exciting!)",
-    letsGo: "Let's go!", // @demo remove-current-line
+    letsGo: "Let's go!",
+    helloUser: "Xin chào, {{userName}}!"
   },
   errorScreen: {
     title: "Something went wrong!",
@@ -75,7 +76,7 @@ const vi = {
   },
   demoNavigator: {
     componentsTab: "Components",
-    debugTab: "Debug",
+    settingTab: "Tuỳ chỉnh",
     communityTab: "Community",
     podcastListTab: "Podcast",
     overviewTab: "Tổng quan",

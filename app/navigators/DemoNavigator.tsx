@@ -5,7 +5,7 @@ import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Icon } from "../components"
 import { translate } from "../i18n"
-import { DemoCommunityScreen, DemoShowroomScreen, DemoDebugScreen } from "../screens"
+import { DemoCommunityScreen, DemoShowroomScreen, SettingScreen } from "../screens"
 import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
 import { colors, spacing, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
@@ -13,7 +13,7 @@ import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 export type DemoTabParamList = {
   DemoCommunity: undefined
   DemoShowroom: { queryIndex?: string; itemIndex?: string }
-  DemoDebug: undefined
+  Setting: undefined
   DemoPodcastList: undefined
 }
 
@@ -28,6 +28,20 @@ export type DemoTabScreenProps<T extends keyof DemoTabParamList> = CompositeScre
 >
 
 const Tab = createBottomTabNavigator<DemoTabParamList>()
+const DebugIcon = ({ focused }) => (
+  <Icon icon="settings" color={focused && colors.tint} size={30} />
+)
+const ComponentsIcon = ({ focused }) => (
+  <Icon icon="components" color={focused && colors.tint} size={30} />
+)
+
+const CommunityIcon = ({ focused }) => (
+  <Icon icon="community" color={focused && colors.tint} size={30} />
+)
+
+const PodcastIcon = ({ focused }) => (
+  <Icon icon="podcast" color={focused && colors.tint} size={30} />
+)
 
 export function DemoNavigator() {
   const { bottom } = useSafeAreaInsets()
@@ -49,9 +63,7 @@ export function DemoNavigator() {
         component={DemoShowroomScreen}
         options={{
           tabBarLabel: translate("demoNavigator.componentsTab"),
-          tabBarIcon: ({ focused }) => (
-            <Icon icon="components" color={focused && colors.tint} size={30} />
-          ),
+          tabBarIcon: ComponentsIcon,
         }}
       />
 
@@ -60,9 +72,7 @@ export function DemoNavigator() {
         component={DemoCommunityScreen}
         options={{
           tabBarLabel: translate("demoNavigator.communityTab"),
-          tabBarIcon: ({ focused }) => (
-            <Icon icon="community" color={focused && colors.tint} size={30} />
-          ),
+          tabBarIcon: CommunityIcon,
         }}
       />
 
@@ -72,20 +82,16 @@ export function DemoNavigator() {
         options={{
           tabBarAccessibilityLabel: translate("demoNavigator.podcastListTab"),
           tabBarLabel: translate("demoNavigator.podcastListTab"),
-          tabBarIcon: ({ focused }) => (
-            <Icon icon="podcast" color={focused && colors.tint} size={30} />
-          ),
+          tabBarIcon: PodcastIcon,
         }}
       />
 
       <Tab.Screen
-        name="DemoDebug"
-        component={DemoDebugScreen}
+        name="Setting"
+        component={SettingScreen}
         options={{
-          tabBarLabel: translate("demoNavigator.debugTab"),
-          tabBarIcon: ({ focused }) => (
-            <Icon icon="debug" color={focused && colors.tint} size={30} />
-          ),
+          tabBarLabel: translate("demoNavigator.settingTab"),
+          tabBarIcon: DebugIcon,
         }}
       />
     </Tab.Navigator>

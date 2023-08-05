@@ -45,7 +45,7 @@ const ko: Translations = {
   },
   demoNavigator: {
     componentsTab: "컴포넌트",
-    debugTab: "디버그",
+    settingTab: "디버그",
     communityTab: "커뮤니티",
     podcastListTab: "팟캐스트",
   },

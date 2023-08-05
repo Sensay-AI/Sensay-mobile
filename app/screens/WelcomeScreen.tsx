@@ -5,82 +5,79 @@ import {
   Button, // @demo remove-current-line
   Text,
 } from "../components"
-import { isRTL } from "../i18n"
+import { isRTL, translate } from "../i18n"
 import { useStores } from "../models" // @demo remove-current-line
 import { AppStackScreenProps } from "../navigators" // @demo remove-current-line
 import { colors, spacing } from "../theme"
-import { useHeader } from "../utils/useHeader" // @demo remove-current-line
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
-import { useAuth0 } from 'react-native-auth0';
+import { useAuth0 } from "react-native-auth0"
+import { useHeader } from "../utils/useHeader"
 
-const welcomeLogo = require("../../assets/images/logo.png")
+const welcomeLogo = require("../../assets/images/sensay-welcome-logo.png")
 const welcomeFace = require("../../assets/images/welcome-face.png")
 
-interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
-
-const LogOutButton = () => {
-  const {clearSession} = useAuth0();
-
-  const onPress = async () => {
-    try {
-      console.log('Log out');
-      await clearSession();
-    } catch (e) {
-      console.log('Log out cancelled');
-    }
-  };
-
-  return <Button onPress={onPress}  tx="common.logOut" />
+interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {
 }
+
 export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
   _props, // @demo remove-current-line
 ) {
-  // @demo remove-block-start
   const { navigation } = _props
   const {
-    authenticationStore: { logout },
+    authenticationStore: { logout: logOutAuth },
+    userStore: { logOut: logOutUser, user, isUser },
   } = useStores()
-
+  const { clearSession } = useAuth0()
   function goNext() {
     navigation.navigate("Demo", { screen: "DemoShowroom" })
+  }
+
+   const logOutApp = () => {
+    try {
+      console.log("Log out")
+      clearSession()
+      logOutAuth()
+      logOutUser()
+    } catch (e) {
+      console.log("Log out cancelled")
+    }
   }
 
   useHeader(
     {
       rightTx: "common.logOut",
-      onRightPress: logout,
+      onRightPress: logOutApp,
     },
-    [logout],
+    [logOutApp],
   )
-  // @demo remove-block-end
 
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
   return (
     <View style={$container}>
       <View style={$topContainer}>
-        <LogOutButton/>
         <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
-        <Text
+        {user && <Text
           testID="welcome-heading"
           style={$welcomeHeading}
-          tx="welcomeScreen.readyForLaunch"
+          text={translate("welcomeScreen.helloUser", { userName: user.full_name })}
           preset="heading"
-        />
+        ></Text>}
+
         <Text tx="welcomeScreen.exciting" preset="subheading" />
         <Image style={$welcomeFace} source={welcomeFace} resizeMode="contain" />
       </View>
 
       <View style={[$bottomContainer, $bottomContainerInsets]}>
         <Text tx="welcomeScreen.postscript" size="md" />
-        {/* @demo remove-block-start */}
-        <Button
-          testID="next-screen-button"
-          preset="reversed"
-          tx="welcomeScreen.letsGo"
-          onPress={goNext}
-        />
-        {/* @demo remove-block-end */}
+        {
+          isUser && <Button
+            testID="next-screen-button"
+            preset="reversed"
+            tx="welcomeScreen.letsGo"
+            onPress={goNext}
+          />
+        }
       </View>
     </View>
   )
@@ -126,4 +123,5 @@ const $welcomeFace: ImageStyle = {
 
 const $welcomeHeading: TextStyle = {
   marginBottom: spacing.md,
+  textAlign: "center",
 }
