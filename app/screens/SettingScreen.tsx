@@ -15,32 +15,41 @@ export const SettingScreen: FC<DemoTabScreenProps<"Setting">> = function Setting
   _props,
 ) {
   const {
-    authenticationStore: { logout: logOutAuth  },
+    authenticationStore: { logout: logOutAuth },
     userStore: { logOut: logOutUser },
   } = useStores()
   const { clearSession } = useAuth0()
+  const { navigation } = _props
 
   const logOutApp = async () => {
-    try {
-      console.log("Log out")
-      await clearSession()
-      logOutAuth()
-      logOutUser()
-    } catch (e) {
-      console.log("Log out cancelled")
-    }
+    clearSession({})
+      .then(_ => {
+        logOutAuth()
+        logOutUser()
+      })
+      .catch(error => {
+        console.log(error)
+        console.log("Log out cancel")
+      })
   }
 
   return (
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$container}>
+
+      <Text style={$title} preset="heading" tx="settingScreen.title" />
+
+      <Text
+        style={$settingTextOptions}
+        tx="settingScreen.editProfile"
+        onPress={() => navigation.push("UpdateProfile")}
+      />
       <Text
         style={$reportBugsLink}
         tx="settingScreen.reportBugs"
-        onPress={() => openLinkInBrowser("https://github.com/infinitered/ignite/issues")}
+        onPress={() => openLinkInBrowser("https://github.com/orgs/Sensay-AI/discussions/new?category=q-a")}
       />
-      <Text style={$title} preset="heading" tx="settingScreen.title" />
       <View style={$buttonContainer}>
-        <Button style={$button} tx="common.logOut" onPress={logOutApp} />
+        <Button style={$button} tx="common.logOut" onPress={logOutApp} textStyle={$buttonText} />
       </View>
     </Screen>
   )
@@ -53,7 +62,7 @@ const $container: ViewStyle = {
 }
 
 const $title: TextStyle = {
-  marginBottom: spacing.xxl,
+  marginBottom: spacing.lg,
 }
 
 const $reportBugsLink: TextStyle = {
@@ -62,12 +71,31 @@ const $reportBugsLink: TextStyle = {
   alignSelf: isRTL ? "flex-start" : "flex-end",
 }
 
+const $settingTextOptions: TextStyle = {
+  color: colors.tint,
+  marginBottom: spacing.xl,
+  alignSelf: isRTL ? "flex-start" : "flex-end",
+}
+
 
 const $button: ViewStyle = {
   marginBottom: spacing.xs,
+  backgroundColor: colors.palette.primary300, // Choose a suitable color for the button background
+  paddingHorizontal: 20,
+  paddingVertical: 10,
+  borderRadius: 8,
+  elevation: 2,
 }
 
 const $buttonContainer: ViewStyle = {
   marginBottom: spacing.md,
+  marginTop: spacing.xxxxl*2,
+
+}
+
+const $buttonText: TextStyle = {
+  color: colors.palette.neutral200, // Text color
+  fontSize: 16,
+  fontWeight: 'bold',
 }
 

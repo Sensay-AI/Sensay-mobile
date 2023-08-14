@@ -10,8 +10,10 @@ const vi = {
       "Chào mừng đến với SensayAI, ứng dụng học ngôn ngữ trí tuệ nhân tạo! Bài học cá nhân, bài tập tương tác, cộng đồng toàn cầu. Thông thạo ngôn ngữ dễ dàng. Bắt đầu ngay!",
     readyForLaunch: "Your app, almost ready for launch!",
     exciting: "(ohh, this is exciting!)",
-    letsGo: "Let's go!",
-    helloUser: "Xin chào, {{userName}}!"
+    letsGo: "Bắt đầu nào!",
+    helloUser: "Xin chào, {{userName}}!",
+    createProfile: "Tạo hồ sơ cá nhân",
+
   },
   errorScreen: {
     title: "Something went wrong!",
@@ -58,7 +60,9 @@ const vi = {
 
     dateOfBirth: "Ngày tháng năm sinh (MM/DD/YYYY)",
     country: "Quốc tịch",
+    countryPlaceholder: "Bấm vào đây để chọn quốc gia của bạn",
     yourLanguage: "Ngôn ngữ bản xứ của bạn",
+    languageListHeader: "Ngôn ngữ (bạn có thể chọn được nhiều ngôn ngữ)",
     userName: "Tên đăng nhập",
 
     gender: {

@@ -1,7 +1,9 @@
+import { translate } from "../i18n"
+
 export const items = [
   // this is the parent or 'item'
   {
-    name: 'Languages',
+    name: translate("updateProfileScreen.languageListHeader"),
     id: 0,
     // these are the children or 'sub items'
     children: [

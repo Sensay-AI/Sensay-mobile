@@ -59,19 +59,14 @@ const AppStack = observer(function AppStack() {
   // @demo remove-block-start
   const {
     authenticationStore: { isAuthenticated },
-    userStore: { isUser },
   } = useStores()
   const WELCOME_PAGE = "Welcome"
   const LOGIN_PAGE = "Login"
   const UPDATE_PROFILE_PAGE = "UpdateProfile"
-  const landingPage = () => isUser ? WELCOME_PAGE : UPDATE_PROFILE_PAGE
-  const initialRouteName = () => isAuthenticated ? landingPage() : LOGIN_PAGE
-  console.log(initialRouteName())
-
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
-      initialRouteName={initialRouteName()}
+      initialRouteName={isAuthenticated ? WELCOME_PAGE : LOGIN_PAGE}
     >
       {isAuthenticated ? (
         <>

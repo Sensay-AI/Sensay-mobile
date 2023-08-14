@@ -6,5 +6,5 @@
  * https://reactnative.dev/docs/security#storing-sensitive-info
  */
 export default {
-  API_URL: "http://127.0.0.1:5000/api/v1/",
+  API_URL: process.env.EXPO_PUBLIC_API_URL,
 }

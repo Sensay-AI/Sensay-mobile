@@ -48,7 +48,10 @@ export interface UserResponse {
   nickname: string,
   gender: string,
   country: string,
-  updated_at: string
+
+  detail: any,
+  status_code: number,
+
   interfaceTag: 'UserResponse';
 }
 
@@ -63,6 +66,8 @@ export interface CreateUserInput {
   "gender": number,
   "picture": string
 }
+
+export interface UpdateUserInput extends CreateUserInput {}
 
 /**
  * The options used to configure apisauce.

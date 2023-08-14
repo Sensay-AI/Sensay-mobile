@@ -18,6 +18,7 @@ const palette = {
   primary400: "#D28468",
   primary500: "#C76542",
   primary600: "#A54F31",
+  primary700: "#1877F2",
 
   secondary100: "#DCDDE9",
   secondary200: "#BCC0D6",
@@ -37,13 +38,6 @@ const palette = {
   overlay20: "rgba(25, 16, 21, 0.2)",
   overlay50: "rgba(25, 16, 21, 0.5)",
 
-  on_secondary_fixed_variant: "#4A4458",
-  m_3_sys_light_inverse_surface: "#322F35",
-  m_3_sys_light_surface_container_high: "#ECE6F0",
-  aqua_sky: "#46A8C7",
-  facebook_logo_background_color: "#1877F2",
-  google_logo_background__color: "#FFFFFF",
-  apple_logo_background__color: "#000000",
 } as const
 
 export const colors = {
@@ -90,4 +84,19 @@ export const colors = {
    *
    */
   errorBackground: palette.angry100,
+  /**
+   * Google Logo Background color on Login Page
+   *
+   */
+  google_logo_background_color: palette.neutral100,
+  /**
+   * Apple Logo Background color on Login Page
+   *
+   */
+  apple_logo_background_color: palette.neutral900,
+  /**
+   * Apple Logo Background color on Login Page
+   *
+   */
+  facebook_logo_background_color: palette.primary700,
 }

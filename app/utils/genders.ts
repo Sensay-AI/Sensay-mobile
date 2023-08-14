@@ -24,7 +24,7 @@ export const genders = [
         },
         {
           "name": translate("updateProfileScreen.gender.preferNotToSay"),
-          "gender": "preferNotToSay",
+          "gender": "prefer_not_to_say",
           "id": 3,
         },
       ],

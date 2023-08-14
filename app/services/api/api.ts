@@ -8,11 +8,12 @@
 import { ApiResponse, ApisauceInstance, create } from "apisauce"
 import Config from "../../config"
 import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem" // @demo remove-current-line
-import type { ApiConfig, ApiFeedResponse } from "./api.types"
-import { UserResponse } from "./api.types" // @demo remove-current-line
+import type { ApiConfig, ApiFeedResponse, UpdateUserInput } from "./api.types"
+import { CreateUserInput, UserResponse } from "./api.types" // @demo remove-current-line
 import type { EpisodeSnapshotIn } from "../../models/Episode"
 import { UserSnapshotIn } from "../../models/User"
 import { toString } from "./apiHelper"
+
 /**
  * Configuring the apisauce instance.
  */
@@ -78,11 +79,35 @@ export class Api {
   }
 
   async getUser(): Promise<{ kind: "ok"; user: UserSnapshotIn } | GeneralApiProblem> {
-    // make the api call
     const response: ApiResponse<UserResponse> = await this.apisauce.get(`user/`)
 
     if (!response.ok) {
       const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    try {
+      const user: UserSnapshotIn = response.data
+      return { kind: "ok", user }
+
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${toString(response.data)}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+  async createUser(user: CreateUserInput): Promise<{ kind: "ok"; user: UserSnapshotIn } | GeneralApiProblem> {
+    // make the api call
+    const response: ApiResponse<UserResponse> = await this.apisauce.post(
+      `user/create`,
+          user
+      )
+
+    if (!response.ok || response.data.status_code) {
+      const problem = getGeneralApiProblem(response)
+      console.error("prob:",problem)
       if (problem) return problem
     }
 
@@ -100,16 +125,16 @@ export class Api {
     }
   }
 
-  async createUser(user: UserSnapshotIn): Promise<{ kind: "ok"; user: UserSnapshotIn } | GeneralApiProblem> {
+  async updateUser(user: UpdateUserInput): Promise<{ kind: "ok"; user: UserSnapshotIn } | GeneralApiProblem> {
     // make the api call
-    const response: ApiResponse<UserResponse> = await this.apisauce.post(
-      `user/create`,
+    const response: ApiResponse<UserResponse> = await this.apisauce.put(
+      `user/update`,
           user
       )
 
-    if (!response.ok) {
-      console.log("data err: ",response.data)
+    if (!response.ok || response.data.status_code) {
       const problem = getGeneralApiProblem(response)
+      console.error(response)
       if (problem) return problem
     }
 

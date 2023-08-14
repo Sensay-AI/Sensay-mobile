@@ -73,7 +73,8 @@
     "reactotron-mst": "3.1.4",
     "reactotron-react-js": "^3.3.7",
     "reactotron-react-native": "5.0.3",
-    "yup": "^1.2.0"
+    "yup": "^1.2.0",
+    "expo-dev-client": "~2.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -131,7 +132,7 @@
     "@types/react-dom": "^18"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=16"
   },
   "prettier": {
     "printWidth": 100,

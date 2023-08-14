@@ -11,7 +11,11 @@ const en = {
     readyForLaunch: "Your app, almost ready for launch!",
     exciting: "(ohh, this is exciting!)",
     letsGo: "Let's go!",
-    helloUser: "Hello, {{userName}}!"
+    helloUser: "Hello, {{userName}}!",
+    createProfile: "Create profile",
+    snackBar: {
+      cantConnect: "Can't connect, our server currently have some trouble!"
+    }
   },
   errorScreen: {
     title: "Something went wrong!",
@@ -54,12 +58,12 @@ const en = {
     email: "Email Address",
     name: "Name",
     nickName: "Nick name",
-
     dateOfBirth: "Date of Birth (MM/DD/YYYY)",
     country: "Country",
+    countryPlaceholder: "Click here to select your nationality",
     phoneNumber: "Phone number",
-
     yourLanguage: "Your language",
+    languageListHeader: "Languages (you can select more than one)",
     userName: "Your user name",
     gender: {
       header: "Gender",
@@ -71,6 +75,7 @@ const en = {
     validation: {
       email: "Please enter a valid email",
       emailRequire: "*Email Address is Required",
+      duplicatedEmail: "This email is already registered, please change",
       fullNameRequire: "*Full name is Required",
       dateOfBirthRequire: "*Date of birth is required",
       minDateOfBirth: "Please select a day after 1/1/1900",
@@ -81,7 +86,11 @@ const en = {
       genderRequire: "*Gender is Required",
       phoneNumberValid: "Please enter a valid phone number",
       phoneNumberRequire: "*Phone number is Required",
-
+      duplicatedPhoneNumber: "This phone number is already registered, please change"
+    },
+    snackBar: {
+      updateSuccess: "Update profile success",
+      retryLabel: "Retry",
     }
   },
   demoNavigator: {
@@ -141,6 +150,8 @@ const en = {
   settingScreen: {
     title: "Setting",
     reportBugs: "Report Bugs",
+    editProfile: "Edit Profile",
+
   },
   demoPodcastListScreen: {
     title: "React Native Radio episodes",

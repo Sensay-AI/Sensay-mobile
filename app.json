@@ -1,6 +1,6 @@
 {
   "name": "SensayAIApp",
-  "displayName": "SensayAIApp",
+  "displayName": "Sensay-AI",
   "expo": {
     "name": "SensayAIApp",
     "slug": "SensayAIApp",
@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/images/splash-logo-all.png",
       "resizeMode": "contain",
-      "backgroundColor": "#191015"
+      "backgroundColor": "#fff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -30,7 +30,7 @@
       "splash": {
         "image": "./assets/images/splash-logo-android-universal.png",
         "resizeMode": "contain",
-        "backgroundColor": "#191015"
+        "backgroundColor": "#fff"
       }
     },
     "ios": {
@@ -41,16 +41,17 @@
         "image": "./assets/images/splash-logo-ios-mobile.png",
         "tabletImage": "./assets/images/splash-logo-ios-tablet.png",
         "resizeMode": "contain",
-        "backgroundColor": "#191015"
+        "backgroundColor": "#fff"
       }
     },
     "web": {
-      "favicon": "./assets/images/app-icon-web-favicon.png",
+      "icon": "./assets/images/sensay-icon-all.png",
       "splash": {
         "image": "./assets/images/splash-logo-web.png",
         "resizeMode": "contain",
-        "backgroundColor": "#191015"
-      }
+        "backgroundColor": "#fff"
+      },
+      "favicon": "./assets/images/app-icon-web-favicon.png"
     },
     "plugins": [
       "expo-localization",
@@ -61,6 +62,11 @@
           "customScheme": "com.sensayaiapp"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8ce91dc7-e89c-4bc1-bf23-9feff8896951"
+      }
+    }
   }
 }

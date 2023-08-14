@@ -12,7 +12,7 @@ export type GeneralApiProblem =
   /**
    * The server experienced a problem. Any 5xx error.
    */
-  | { kind: "server" }
+  | { kind: "server"; data?: "" }
   /**
    * We're not allowed because we haven't identified ourself. This is 401.
    */
@@ -37,6 +37,10 @@ export type GeneralApiProblem =
    * The data we received is not in the expected format.
    */
   | { kind: "bad-data" }
+  /**
+   * The data we received is not in the expected format.
+   */
+  | { kind: "not-unique-error"; data?: ""  }
 
 /**
  * Attempts to get a common cause of problems from an api response.
@@ -52,7 +56,7 @@ export function getGeneralApiProblem(response: ApiResponse<any>): GeneralApiProb
     case "TIMEOUT_ERROR":
       return { kind: "timeout", temporary: true }
     case "SERVER_ERROR":
-      return { kind: "server" }
+      return { kind: "server", data: response?.data?.detail }
     case "UNKNOWN_ERROR":
       return { kind: "unknown", temporary: true }
     case "CLIENT_ERROR":
@@ -68,6 +72,10 @@ export function getGeneralApiProblem(response: ApiResponse<any>): GeneralApiProb
       }
     case "CANCEL_ERROR":
       return null
+    case null: // Custom Error
+      if (response.data.status_code === 10001) {
+          return { kind: "not-unique-error", data: response.data.detail }
+      }
   }
 
   return null

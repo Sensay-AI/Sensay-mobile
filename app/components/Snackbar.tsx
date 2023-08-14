@@ -11,8 +11,8 @@ export interface SnackbarProps {
   visible: boolean,
   onToggleSnackBar: () => void,
   onDismissSnackBar: () => void,
-  actionLabel: string,
-  actionOnPress: () => void,
+  actionLabel?: string,
+  actionOnPress?: () => void,
   snackBarText: string,
   duration?: Duration
 }
