@@ -30,8 +30,9 @@ import { ErrorBoundary } from "./screens"
 import * as storage from "./utils/storage"
 import { customFontsToLoad } from "./theme"
 import Config from "./config"
-import { Auth0Provider } from 'react-native-auth0';
-import { AUTH0_DOMAIN, AUTH0_CLIENT_ID } from '@env';
+import { Auth0Provider } from "react-native-auth0"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { ViewStyle } from "react-native"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -57,9 +58,9 @@ const config = {
 }
 
 const auth0Config = {
-  domain: AUTH0_DOMAIN,
-  clientId: AUTH0_CLIENT_ID,
-};
+  domain: process.env.EXPO_PUBLIC_AUTH0_DOMAIN,
+  clientId: process.env.EXPO_PUBLIC_AUTH0_CLIENT_ID,
+}
 
 interface AppProps {
   hideSplashScreen: () => Promise<void>
@@ -103,19 +104,21 @@ function App(props: AppProps) {
 
   // otherwise, we're ready to render the app
   return (
-    <PaperProvider>
-    <Auth0Provider domain={auth0Config.domain} clientId={auth0Config.clientId}>
-    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <ErrorBoundary catchErrors={Config.catchErrors}>
-        <AppNavigator
-          linking={linking}
-          initialState={initialNavigationState}
-          onStateChange={onNavigationStateChange}
-        />
-      </ErrorBoundary>
-    </SafeAreaProvider>
-    </Auth0Provider>
-    </PaperProvider>
+    <GestureHandlerRootView style={{ flex: 1 } as ViewStyle}>
+      <PaperProvider>
+        <Auth0Provider domain={auth0Config.domain} clientId={auth0Config.clientId}>
+          <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+            <ErrorBoundary catchErrors={Config.catchErrors}>
+              <AppNavigator
+                linking={linking}
+                initialState={initialNavigationState}
+                onStateChange={onNavigationStateChange}
+              />
+            </ErrorBoundary>
+          </SafeAreaProvider>
+        </Auth0Provider>
+      </PaperProvider>
+    </GestureHandlerRootView>
   )
 }
 

@@ -7,10 +7,15 @@ const en = {
   },
   welcomeScreen: {
     postscript:
-      "psst  — This probably isn't what your app looks like. (Unless your designer handed you these screens, and in that case, ship it!)",
+      "Discover SensayAI, your AI-powered language learning app. Personalized lessons, interactive exercises, and global community. Master languages effortlessly. Start today!",
     readyForLaunch: "Your app, almost ready for launch!",
     exciting: "(ohh, this is exciting!)",
-    letsGo: "Let's go!", // @demo remove-current-line
+    letsGo: "Let's go!",
+    helloUser: "Hello, {{userName}}!",
+    createProfile: "Create profile",
+    snackBar: {
+      cantConnect: "Can't connect, our server currently have some trouble!"
+    }
   },
   errorScreen: {
     title: "Something went wrong!",
@@ -53,12 +58,12 @@ const en = {
     email: "Email Address",
     name: "Name",
     nickName: "Nick name",
-
     dateOfBirth: "Date of Birth (MM/DD/YYYY)",
     country: "Country",
+    countryPlaceholder: "Click here to select your nationality",
     phoneNumber: "Phone number",
-
     yourLanguage: "Your language",
+    languageListHeader: "Languages (you can select more than one)",
     userName: "Your user name",
     gender: {
       header: "Gender",
@@ -70,6 +75,7 @@ const en = {
     validation: {
       email: "Please enter a valid email",
       emailRequire: "*Email Address is Required",
+      duplicatedEmail: "This email is already registered, please change",
       fullNameRequire: "*Full name is Required",
       dateOfBirthRequire: "*Date of birth is required",
       minDateOfBirth: "Please select a day after 1/1/1900",
@@ -80,12 +86,16 @@ const en = {
       genderRequire: "*Gender is Required",
       phoneNumberValid: "Please enter a valid phone number",
       phoneNumberRequire: "*Phone number is Required",
-
+      duplicatedPhoneNumber: "This phone number is already registered, please change"
+    },
+    snackBar: {
+      updateSuccess: "Update profile success",
+      retryLabel: "Retry",
     }
   },
   demoNavigator: {
     componentsTab: "Components",
-    debugTab: "Debug",
+    settingTab: "Setting",
     communityTab: "Community",
     podcastListTab: "Podcast",
     overviewTab: "Overview",
@@ -137,25 +147,11 @@ const en = {
     demoViaTxProp: "Via `tx` Prop",
     demoViaSpecifiedTxProp: "Via `{{prop}}Tx` Prop",
   },
-  demoDebugScreen: {
-    howTo: "HOW TO",
-    title: "Debug",
-    tagLine:
-      "Congratulations, you've got a very advanced React Native app template here.  Take advantage of this boilerplate!",
-    reactotron: "Send to Reactotron",
+  settingScreen: {
+    title: "Setting",
     reportBugs: "Report Bugs",
-    demoList: "Demo List",
-    demoPodcastList: "Demo Podcast List",
-    androidReactotronHint:
-      "If this doesn't work, ensure the Reactotron desktop app is running, run adb reverse tcp:9090 tcp:9090 from your terminal, and reload the app.",
-    iosReactotronHint:
-      "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
-    macosReactotronHint:
-      "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
-    webReactotronHint:
-      "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
-    windowsReactotronHint:
-      "If this doesn't work, ensure the Reactotron desktop app is running and reload app.",
+    editProfile: "Edit Profile",
+
   },
   demoPodcastListScreen: {
     title: "React Native Radio episodes",

@@ -32,7 +32,42 @@ export interface ApiFeedResponse {
     image: string
   }
   items: EpisodeItem[]
+  interfaceTag: 'ApiFeedResponse';
 }
+
+export interface UserResponse {
+  user_id: string,
+  full_name: string,
+  phone_number: string,
+  language: string,
+  date_of_birth: string,
+  picture?: string,
+  created_at: string,
+  email: string,
+  id: number,
+  nickname: string,
+  gender: string,
+  country: string,
+
+  detail: any,
+  status_code: number,
+
+  interfaceTag: 'UserResponse';
+}
+
+export interface CreateUserInput {
+  "full_name": string,
+  "email": string,
+  "country": string,
+  "language": string,
+  "phone_number": string,
+  "nickname": string,
+  "date_of_birth": string,
+  "gender": number,
+  "picture": string
+}
+
+export interface UpdateUserInput extends CreateUserInput {}
 
 /**
  * The options used to configure apisauce.
@@ -44,7 +79,7 @@ export interface ApiConfig {
   url: string
 
   /**
-   * Milliseconds before we timeout the request.
+   * Milliseconds before we time out the request.
    */
   timeout: number
 }

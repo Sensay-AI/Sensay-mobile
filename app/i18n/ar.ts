@@ -45,7 +45,7 @@ const ar: Translations = {
   },
   demoNavigator: {
     componentsTab: "عناصر",
-    debugTab: "تصحيح",
+    settingTab: "تصحيح",
     communityTab: "واصل اجتماعي",
     podcastListTab: "البودكاست",
   },

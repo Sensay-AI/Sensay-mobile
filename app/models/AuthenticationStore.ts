@@ -1,27 +1,30 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
+import { api } from "../services/api"
+import { Credentials } from "react-native-auth0"
 
 export const AuthenticationStoreModel = types
   .model("AuthenticationStore")
   .props({
-    authToken: types.maybe(types.string),
-    // userInfo: types.maybe(Auth0UserModel),
+    credential: types.frozen<Credentials>(),
   })
   .actions(withSetPropAction)
   .actions((store) => ({
-    setAuthToken(value?: string) {
-      store.authToken = value
+    setAuthToken(value?: Credentials) {
+      store.credential = value
     },
-    // setUserInfo(value?: any) {
-    //   store.userInfo = value
-    // },
     logout() {
-      store.authToken = undefined
+      store.credential = undefined
+    },
+    distributeAuthToken(value?: string) {
+      // optionally grab the store's authToken if not passing a value
+      const token = value || store.credential.accessToken;
+      api.apisauce.setHeader("Authorization", `Bearer ${token}`);
     },
   }))
   .views((store) => ({
     get isAuthenticated() {
-      return !!store.authToken
+      return !!store.credential
     },
   }))
 

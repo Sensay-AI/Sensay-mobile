@@ -5,14 +5,14 @@ const ko: Translations = {
     ok: "확인!",
     cancel: "취소",
     back: "뒤로",
-    logOut: "로그아웃", // @demo remove-current-line
+    logOut: "로그아웃",
   },
   welcomeScreen: {
     postscript:
       "잠깐! — 지금 보시는 것은 아마도 당신의 앱의 모양새가 아닐겁니다. (디자이너분이 이렇게 건내주셨다면 모를까요. 만약에 그렇다면, 이대로 가져갑시다!) ",
     readyForLaunch: "출시 준비가 거의 끝난 나만의 앱!",
     exciting: "(오, 이거 신나는데요!)",
-    letsGo: "가보자구요!", // @demo remove-current-line
+    letsGo: "가보자구요!",
   },
   errorScreen: {
     title: "뭔가 잘못되었습니다!",
@@ -45,7 +45,7 @@ const ko: Translations = {
   },
   demoNavigator: {
     componentsTab: "컴포넌트",
-    debugTab: "디버그",
+    settingTab: "디버그",
     communityTab: "커뮤니티",
     podcastListTab: "팟캐스트",
   },

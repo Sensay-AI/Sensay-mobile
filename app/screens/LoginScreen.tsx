@@ -5,14 +5,12 @@ import {
   Button as IgniteButton, Icon,
   Menu, MenuItem,
   Screen, Text,
-
 } from "../components"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 import { Button, IconButton } from "react-native-paper"
 import i18n from "i18n-js"
-import { useAuth0 } from "react-native-auth0"
-import { AUTH0_AUDIENCE, AUTH0_AUTHORIZE_SCOPE } from "@env"
+import { Credentials, useAuth0 } from "react-native-auth0"
 import { SENSAYAI_LOGO } from "../utils/images"
 import { useStores } from "../models"
 
@@ -27,7 +25,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
   const closeLanguageMenu = () => setLanguageMenuVisible(false)
 
   const {
-    authenticationStore: { setAuthToken},
+    authenticationStore: { setAuthToken, distributeAuthToken },
   } = useStores()
   const languageMenuItems = [
     new MenuItem("vietnamese", () => {
@@ -51,21 +49,19 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
 
   async function authorizeWithSocial(connectionType: SocialConnectionTypes): Promise<void> {
     try {
-      await authorize({ scope: AUTH0_AUTHORIZE_SCOPE, audience: AUTH0_AUDIENCE, connection: connectionType })
+      await authorize({ scope: process.env.EXPO_PUBLIC_AUTH0_AUTHORIZE_SCOPE, audience: process.env.EXPO_PUBLIC_AUTH0_AUDIENCE, connection: connectionType })
       if (error) {
-        console.log(error)
+        console.log("auth0 error: ", error)
         return
       }
-      const credentials = await getCredentials()
+      const credentials: Credentials = await getCredentials()
       if (credentials) {
-        setAuthToken(credentials.toString())
+        setAuthToken(credentials)
+        distributeAuthToken(credentials.accessToken)
       }
     } catch (e) {
       console.log(e)
     }
-
-    // console.log("user: ",user)
-    // setUserInfo(user)
   }
 
   async function loginWithFacebook(): Promise<void> {
@@ -151,7 +147,7 @@ const $screenContentContainer: ViewStyle = {
 
 const $tapButtonWithFacebook: ViewStyle = {
   marginTop: spacing.xs,
-  backgroundColor: colors.palette.facebook_logo_background_color,
+  backgroundColor: colors.facebook_logo_background_color,
   borderRadius: 10,
   width: 345,
   justifyContent: "flex-start",
@@ -159,7 +155,7 @@ const $tapButtonWithFacebook: ViewStyle = {
 
 const $tapButtonWithGoogle: ViewStyle = {
   marginTop: spacing.xs,
-  backgroundColor: colors.palette.google_logo_background__color,
+  backgroundColor: colors.google_logo_background_color,
   borderRadius: 10,
   width: 345,
   justifyContent: "flex-start",
@@ -172,12 +168,12 @@ const $tapButtonWithGoogle: ViewStyle = {
   shadowOpacity: 0.51,
   shadowRadius: 13.16,
   elevation: 20,
-  overflow: 'visible'
+  overflow: "visible",
 }
 
 const $tapButtonWithApple: ViewStyle = {
   marginTop: spacing.xs,
-  backgroundColor: colors.palette.apple_logo_background__color,
+  backgroundColor: colors.apple_logo_background_color,
   borderRadius: 10,
   width: 345,
   justifyContent: "flex-start",
@@ -201,7 +197,7 @@ const $loginButtonContainerStyle: ViewStyle = {
   flexDirection: "column",
   justifyContent: "center",
   marginTop: spacing.lg,
-  gap: spacing.xxs
+  gap: spacing.xxs,
 }
 const $topButtonGroupContainerStyle: ViewStyle = {
   flexDirection: "row",

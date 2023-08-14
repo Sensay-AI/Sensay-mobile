@@ -37,9 +37,8 @@ import { colors } from "app/theme"
 export type AppStackParamList = {
   Welcome: undefined
   Login: undefined // @demo remove-current-line
-  Demo: NavigatorScreenParams<DemoTabParamList> // @demo remove-current-line
-  // 🔥 Your screens go here
-  // IGNITE_GENERATOR_ANCHOR_APP_STACK_PARAM_LIST
+  Demo: NavigatorScreenParams<DemoTabParamList>
+  UpdateProfile: undefined // @demo remove-current-line
 }
 
 /**
@@ -61,29 +60,25 @@ const AppStack = observer(function AppStack() {
   const {
     authenticationStore: { isAuthenticated },
   } = useStores()
-
-  // @demo remove-block-end
+  const WELCOME_PAGE = "Welcome"
+  const LOGIN_PAGE = "Login"
+  const UPDATE_PROFILE_PAGE = "UpdateProfile"
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
-      initialRouteName={isAuthenticated ? "Welcome" : "Login"} // @demo remove-current-line
+      initialRouteName={isAuthenticated ? WELCOME_PAGE : LOGIN_PAGE}
     >
-      {/* @demo remove-block-start */}
       {isAuthenticated ? (
         <>
-          {/* @demo remove-block-end */}
-          <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
-          {/* @demo remove-block-start */}
+          <Stack.Screen name={WELCOME_PAGE} component={Screens.WelcomeScreen} />
           <Stack.Screen name="Demo" component={DemoNavigator} />
+          <Stack.Screen name={UPDATE_PROFILE_PAGE} component={Screens.UpdateProfileScreen}/>
         </>
       ) : (
         <>
-          <Stack.Screen name="Login" component={Screens.LoginScreen} />
+          <Stack.Screen name={LOGIN_PAGE} component={Screens.LoginScreen} />
         </>
       )}
-      {/* @demo remove-block-end */}
-      {/** 🔥 Your screens go here */}
-      {/* IGNITE_GENERATOR_ANCHOR_APP_STACK_SCREENS */}
     </Stack.Navigator>
   )
 })
