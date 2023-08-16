@@ -1,0 +1,29 @@
+
+name: Run tests & publish image to Dockerhub
+
+on:
+  release:
+    types: [published]
+    branches:
+      - main
+    tags:
+      - "v*"
+
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run Jest
+        uses: stefanoeb/jest-action@1.0.3
