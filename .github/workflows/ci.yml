@@ -46,5 +46,7 @@ jobs:
         name: List the state of node modules
         continue-on-error: true
         run: npm list
-      - run: npm install
-      - run: npm run test
+      - name: Install module
+        run: npm install
+      - name: Run unit test
+        run: npm run test
