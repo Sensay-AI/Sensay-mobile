@@ -5,16 +5,16 @@ import { TextStyle, ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Icon } from "../components"
 import { translate } from "../i18n"
-import { DemoCommunityScreen, DemoShowroomScreen, SettingScreen } from "../screens"
+import { DemoCommunityScreen, HomePageScreen, SettingScreen } from "../screens"
 import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
 import { colors, spacing, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
 
 export type DemoTabParamList = {
   DemoCommunity: undefined
-  DemoShowroom: { queryIndex?: string; itemIndex?: string }
   Setting: undefined
   DemoPodcastList: undefined
+  HomePage: undefined
 }
 
 /**
@@ -31,8 +31,8 @@ const Tab = createBottomTabNavigator<DemoTabParamList>()
 const DebugIcon = ({ focused }) => (
   <Icon icon="settings" color={focused && colors.tint} size={30} />
 )
-const ComponentsIcon = ({ focused }) => (
-  <Icon icon="components" color={focused && colors.tint} size={30} />
+const HomeIcon = ({ focused }) => (
+  <Icon icon="home" color={focused && colors.tint} size={30} />
 )
 
 const CommunityIcon = ({ focused }) => (
@@ -59,11 +59,11 @@ export function DemoNavigator() {
       }}
     >
       <Tab.Screen
-        name="DemoShowroom"
-        component={DemoShowroomScreen}
+        name="HomePage"
+        component={HomePageScreen}
         options={{
-          tabBarLabel: translate("demoNavigator.componentsTab"),
-          tabBarIcon: ComponentsIcon,
+          tabBarLabel: translate("demoNavigator.homeTab"),
+          tabBarIcon: HomeIcon,
         }}
       />
 

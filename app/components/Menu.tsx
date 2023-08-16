@@ -1,6 +1,7 @@
 import { StyleProp, View, ViewStyle } from "react-native"
 import { Button, Menu as BaseMenu } from "react-native-paper"
 import React, { ReactElement } from "react"
+import { DisplayLanguage } from "../utils/languages"
 
 export interface MenuProps {
   /**
@@ -17,7 +18,7 @@ export interface MenuProps {
 export class MenuItem {
   // eslint-disable-next-line no-useless-constructor
   constructor(
-    public readonly title: string,
+    public readonly title: DisplayLanguage,
     public readonly action: () => void
   ) {
   }

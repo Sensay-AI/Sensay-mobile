@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React, { FC, useEffect } from "react"
-import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
+import { ActivityIndicator, Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
   Button, EmptyState, Snackbar, // @demo remove-current-line
   Text,
@@ -37,7 +37,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   const onDismissSnackBar = () => setSnackBarVisible(false)
 
   function goNext() {
-    navigation.navigate("Demo", { screen: "DemoShowroom" })
+    navigation.navigate("Demo", { screen: "HomePage" })
   }
 
   function goCreateProfile() {
@@ -67,10 +67,16 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   async function fetchingUser() {
     setIsLoading(true)
     await userStore.fetchUser().then((res) => {
-      if (res.kind === "cannot-connect") {
+      if (res.kind !== "ok") {
         setIsConnect(false)
         setSnackBarText(translate("welcomeScreen.snackBar.cantConnect"))
         onToggleSnackBar()
+
+        if (res.kind === "forbidden") {
+          logOutAuth()
+          userStore.logOut()
+        }
+
         return
       }
       if (res.kind === "ok") {
@@ -97,6 +103,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
       <View style={$topContainer}>
         {!isConnect &&
           <View>
+            {isLoading && <ActivityIndicator />}
             <EmptyState
               preset="generic"
               buttonOnPress={fetchingUser}
@@ -127,6 +134,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
 
       {isConnect && <View style={[$bottomContainer, $bottomContainerInsets]}>
         <Text tx="welcomeScreen.postscript" size="md" />
+        {isLoading && <ActivityIndicator />}
         {
           userStore.isUser && <Button
             testID="next-screen-button"

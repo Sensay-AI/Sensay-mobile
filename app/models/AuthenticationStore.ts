@@ -6,25 +6,25 @@ import { Credentials } from "react-native-auth0"
 export const AuthenticationStoreModel = types
   .model("AuthenticationStore")
   .props({
-    credential: types.frozen<Credentials>(),
+    accessToken: types.maybe(types.string),
   })
   .actions(withSetPropAction)
   .actions((store) => ({
     setAuthToken(value?: Credentials) {
-      store.credential = value
+      store.accessToken = value.accessToken
     },
     logout() {
-      store.credential = undefined
+      store.accessToken = undefined
     },
     distributeAuthToken(value?: string) {
       // optionally grab the store's authToken if not passing a value
-      const token = value || store.credential.accessToken;
+      const token = value || store.accessToken;
       api.apisauce.setHeader("Authorization", `Bearer ${token}`);
     },
   }))
   .views((store) => ({
     get isAuthenticated() {
-      return !!store.credential
+      return !!store.accessToken
     },
   }))
 
