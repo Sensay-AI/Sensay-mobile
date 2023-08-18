@@ -1,4 +1,5 @@
 import { translate } from "../i18n"
+import { CountryCode } from "react-native-country-picker-modal"
 
 export const items = [
   // this is the parent or 'item'
@@ -9,404 +10,359 @@ export const items = [
     children: [
       {
         "name": "English",
-        "id": 1
+        "id": 1,
+        "countryCode": "us"
       },
       {
         "name": "Vietnamese",
-        "id": 2
+        "id": 2,
+        "countryCode": "vn"
       },
       {
         "name": "Spanish",
-        "id": 3
+        "id": 3,
+        "countryCode": "es"
       },
       {
-        "name": "Chinese",
-        "id": 4
+        "name": "Traditional Chinese",
+        "id": 4,
+        "countryCode": "cn"
       },
       {
         "name": "Arabic",
-        "id": 5
+        "id": 5,
+        "countryCode": "sa"
       },
       {
         "name": "French",
-        "id": 6
+        "id": 6,
+        "countryCode": "fr"
       },
       {
         "name": "Russian",
-        "id": 7
+        "id": 7,
+        "countryCode": "ru"
       },
       {
         "name": "German",
-        "id": 8
+        "id": 8,
+        "countryCode": "de"
       },
       {
         "name": "Japanese",
-        "id": 9
+        "id": 9,
+        "countryCode": "jp"
       },
       {
         "name": "Portuguese",
-        "id": 10
+        "id": 10,
+        "countryCode": "pt"
       },
       {
         "name": "Korean",
-        "id": 11
+        "id": 11,
+        "countryCode": "kr"
       },
       {
         "name": "Italian",
-        "id": 12
+        "id": 12,
+        "countryCode": "it"
       },
       {
         "name": "Turkish",
-        "id": 13
+        "id": 13,
+        "countryCode": "tr"
       },
       {
         "name": "Dutch",
-        "id": 14
+        "id": 14,
+        "countryCode": "nl"
       },
       {
         "name": "Polish",
-        "id": 15
+        "id": 15,
+        "countryCode": "pl"
       },
       {
         "name": "Thai",
-        "id": 16
+        "id": 16,
+        "countryCode": "th"
       },
       {
         "name": "Swedish",
-        "id": 17
+        "id": 17,
+        "countryCode": "se"
       },
       {
         "name": "Indonesian",
-        "id": 18
+        "id": 18,
+        "countryCode": "id"
       },
       {
         "name": "Greek",
-        "id": 19
+        "id": 19,
+        "countryCode": "gr"
       },
       {
         "name": "Czech",
-        "id": 20
+        "id": 20,
+        "countryCode": "cz"
       },
       {
         "name": "Danish",
-        "id": 21
+        "id": 21,
+        "countryCode": "dk"
       },
       {
         "name": "Finnish",
-        "id": 22
+        "id": 22,
+        "countryCode": "fi"
       },
       {
         "name": "Norwegian",
-        "id": 23
+        "id": 23,
+        "countryCode": "no"
       },
       {
         "name": "Hungarian",
-        "id": 24
+        "id": 24,
+        "countryCode": "hu"
       },
       {
         "name": "Hebrew",
-        "id": 25
+        "id": 25,
+        "countryCode": "il"
       },
       {
         "name": "Slovak",
-        "id": 26
+        "id": 26,
+        "countryCode": "sk"
       },
       {
         "name": "Croatian",
-        "id": 27
+        "id": 27,
+        "countryCode": "hr"
       },
       {
         "name": "Romanian",
-        "id": 28
+        "id": 28,
+        "countryCode": "ro"
       },
       {
         "name": "Ukrainian",
-        "id": 29
+        "id": 29,
+        "countryCode": "ua"
       },
       {
         "name": "Bulgarian",
-        "id": 30
+        "id": 30,
+        "countryCode": "bg"
       },
       {
         "name": "Slovenian",
-        "id": 31
+        "id": 31,
+        "countryCode": "si"
       },
       {
         "name": "Serbian",
-        "id": 32
+        "id": 32,
+        "countryCode": "rs"
       },
       {
         "name": "Lithuanian",
-        "id": 33
+        "id": 33,
+        "countryCode": "lt"
       },
       {
         "name": "Latvian",
-        "id": 34
+        "id": 34,
+        "countryCode": "lv"
       },
       {
         "name": "Estonian",
-        "id": 35
+        "id": 35,
+        "countryCode": "ee"
       },
       {
         "name": "Georgian",
-        "id": 36
+        "id": 36,
+        "countryCode": "ge"
       },
       {
         "name": "Armenian",
-        "id": 37
+        "id": 37,
+        "countryCode": "am"
       },
       {
         "name": "Bengali",
-        "id": 38
+        "id": 38,
+        "countryCode": "bd"
       },
       {
         "name": "Hindi",
-        "id": 39
+        "id": 39,
+        "countryCode": "in"
       },
       {
         "name": "Urdu",
-        "id": 40
+        "id": 40,
+        "countryCode": "pk"
       },
       {
         "name": "Tamil",
-        "id": 41
-      },
-      {
-        "name": "Telugu",
-        "id": 42
-      },
-      {
-        "name": "Kannada",
-        "id": 43
-      },
-      {
-        "name": "Malayalam",
-        "id": 44
-      },
-      {
-        "name": "Marathi",
-        "id": 45
-      },
-      {
-        "name": "Gujarati",
-        "id": 46
-      },
-      {
-        "name": "Punjabi",
-        "id": 47
+        "id": 41,
+        "countryCode": "lk"
       },
       {
         "name": "Burmese",
-        "id": 48
+        "id": 48,
+        "countryCode": "mm"
       },
       {
         "name": "Khmer",
-        "id": 49
+        "id": 49,
+        "countryCode": "kh"
       },
       {
         "name": "Lao",
-        "id": 50
-      },
-      {
-        "name": "Burmese",
-        "id": 51
-      },
-      {
-        "name": "Thai",
-        "id": 52
+        "id": 50,
+        "countryCode": "la"
       },
       {
         "name": "Tagalog",
-        "id": 53
+        "id": 53,
+        "countryCode": "ph"
       },
       {
         "name": "Malay",
-        "id": 54
-      },
-      {
-        "name": "Indonesian",
-        "id": 55
+        "id": 54,
+        "countryCode": "my"
       },
       {
         "name": "Swahili",
-        "id": 56
+        "id": 56,
+        "countryCode": "tz"
       },
       {
         "name": "Amharic",
-        "id": 57
+        "id": 57,
+        "countryCode": "et"
       },
       {
         "name": "Hausa",
-        "id": 58
-      },
-      {
-        "name": "Yoruba",
-        "id": 59
-      },
-      {
-        "name": "Igbo",
-        "id": 60
+        "id": 58,
+        "countryCode": "ng"
       },
       {
         "name": "Zulu",
-        "id": 61
-      },
-      {
-        "name": "Xhosa",
-        "id": 62
+        "id": 61,
+        "countryCode": "za"
       },
       {
         "name": "Sesotho",
-        "id": 63
+        "id": 63,
+        "countryCode": "ls"
       },
       {
         "name": "Somali",
-        "id": 64
+        "id": 64,
+        "countryCode": "so"
       },
       {
         "name": "Chichewa",
-        "id": 65
-      },
-      {
-        "name": "Swazi",
-        "id": 66
-      },
-      {
-        "name": "Sinhala",
-        "id": 67
+        "id": 65,
+        "countryCode": "mw"
       },
       {
         "name": "Tigrinya",
-        "id": 68
-      },
-      {
-        "name": "Oromo",
-        "id": 69
+        "id": 68,
+        "countryCode": "er"
       },
       {
         "name": "Akan",
-        "id": 70
-      },
-      {
-        "name": "Ibibio",
-        "id": 71
-      },
-      {
-        "name": "Hausa",
-        "id": 72
-      },
-      {
-        "name": "Yoruba",
-        "id": 73
-      },
-      {
-        "name": "Igbo",
-        "id": 74
-      },
-      {
-        "name": "Zulu",
-        "id": 75
-      },
-      {
-        "name": "Xhosa",
-        "id": 76
-      },
-      {
-        "name": "Sesotho",
-        "id": 77
-      },
-      {
-        "name": "Somali",
-        "id": 78
-      },
-      {
-        "name": "Chichewa",
-        "id": 79
-      },
-      {
-        "name": "Swazi",
-        "id": 80
-      },
-      {
-        "name": "Sinhala",
-        "id": 81
-      },
-      {
-        "name": "Tigrinya",
-        "id": 82
-      },
-      {
-        "name": "Oromo",
-        "id": 83
-      },
-      {
-        "name": "Akan",
-        "id": 84
-      },
-      {
-        "name": "Ibibio",
-        "id": 85
+        "id": 70,
+        "countryCode": "gh"
       },
       {
         "name": "Haitian Creole",
-        "id": 86
+        "id": 72,
+        "countryCode": "ht"
       },
       {
         "name": "Fijian",
-        "id": 87
+        "id": 73,
+        "countryCode": "fj"
       },
       {
         "name": "Tongan",
-        "id": 88
+        "id": 74,
+        "countryCode": "to"
       },
       {
         "name": "Samoan",
-        "id": 89
+        "id": 75,
+        "countryCode": "ws"
       },
       {
         "name": "Maori",
-        "id": 90
+        "id": 76,
+        "countryCode": "nz"
       },
       {
         "name": "Marshallese",
-        "id": 91
-      },
-      {
-        "name": "Hawaiian",
-        "id": 92
+        "id": 77,
+        "countryCode": "mh"
       },
       {
         "name": "Chamorro",
-        "id": 93
+        "id": 79,
+        "countryCode": "gu"
       },
       {
         "name": "Palauan",
-        "id": 94
-      },
-      {
-        "name": "Navajo",
-        "id": 95
+        "id": 80,
+        "countryCode": "pw"
       },
       {
         "name": "Inuktitut",
-        "id": 96
+        "id": 82,
+        "countryCode": "ca"
       },
       {
-        "name": "Yup'ik",
-        "id": 97
+        "name": "Tswana",
+        "id": 88,
+        "countryCode": "bw"
       },
       {
-        "name": "Cherokee",
-        "id": 98
+        "name": "Wolof",
+        "id": 90,
+        "countryCode": "sn"
       },
       {
-        "name": "Ojibwe",
-        "id": 99
-      },
-      {
-        "name": "Hopi",
-        "id": 100
+        "name": "Swazi",
+        "id": 94,
+        "countryCode": "sz"
       }
     ]
   }
 ];
+
+export const languagesAssociateById: { [key: string]: { "name": string, "id": string, "countryCode":string } } = items[0].children.reduce((acc, item) => {
+  acc[item.id] = { "name": item.name, "id": item.id, "countryCode": item.countryCode}
+  return acc
+}, {})
+
+export const languagesNameToId: { [key: string]: number } = Object.keys(languagesAssociateById).reduce((ret, key) => {
+  ret[languagesAssociateById[key].name] = +key
+  return ret
+}, {})
+
+export const languagesCountryCodeToId: { [key: string]: number } = Object.keys(languagesAssociateById).reduce((ret, key) => {
+  ret[languagesAssociateById[key].countryCode] = +key
+  return ret
+}, {})
+
+export const acceptLanguageCountryCode= items[0].children.map(lang => lang.countryCode.toUpperCase()) as CountryCode[]
+
+export type DisplayLanguage = "vietnamese" | "english" | "korean" | "arabic"
+export const allowLanguagePrefix = ["en", "vi", "ko", "ar"]

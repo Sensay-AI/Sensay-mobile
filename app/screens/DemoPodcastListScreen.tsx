@@ -22,7 +22,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated"
 import { Button, Card, EmptyState, Icon, Screen, Text, Toggle } from "../components"
-import { isRTL, translate } from "../i18n"
+import { isRTL } from "../i18n"
 import { useStores } from "../models"
 import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
@@ -79,16 +79,8 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
               <EmptyState
                 preset="generic"
                 style={$emptyState}
-                headingTx={
-                  episodeStore.favoritesOnly
-                    ? "demoPodcastListScreen.noFavoritesEmptyState.heading"
-                    : undefined
-                }
-                contentTx={
-                  episodeStore.favoritesOnly
-                    ? "demoPodcastListScreen.noFavoritesEmptyState.content"
-                    : undefined
-                }
+                headingTx={undefined}
+                contentTx={ undefined}
                 button={episodeStore.favoritesOnly ? null : undefined}
                 buttonOnPress={manualRefresh}
                 imageStyle={$emptyStateImage}
@@ -98,7 +90,7 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
           }
           ListHeaderComponent={
             <View style={$heading}>
-              <Text preset="heading" tx="demoPodcastListScreen.title" />
+              <Text preset="heading" />
               {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
                 <View style={$toggle}>
                   <Toggle
@@ -107,10 +99,8 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
                       episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
                     }
                     variant="switch"
-                    labelTx="demoPodcastListScreen.onlyFavorites"
                     labelPosition="left"
                     labelStyle={$labelStyle}
-                    accessibilityLabel={translate("demoPodcastListScreen.accessibility.switch")}
                   />
                 </View>
               )}
@@ -178,16 +168,14 @@ const EpisodeCard = observer(function EpisodeCard({
       Platform.select<AccessibilityProps>({
         ios: {
           accessibilityLabel: episode.title,
-          accessibilityHint: translate("demoPodcastListScreen.accessibility.cardHint", {
-            action: isFavorite ? "unfavorite" : "favorite",
-          }),
+          accessibilityHint:"",
         },
         android: {
           accessibilityLabel: episode.title,
           accessibilityActions: [
             {
               name: "longpress",
-              label: translate("demoPodcastListScreen.accessibility.favoriteAction"),
+              label: "",
             },
           ],
           onAccessibilityAction: ({ nativeEvent }) => {
@@ -268,22 +256,12 @@ const EpisodeCard = observer(function EpisodeCard({
           onPress={handlePressFavorite}
           onLongPress={handlePressFavorite}
           style={[$favoriteButton, isFavorite && $unFavoriteButton]}
-          accessibilityLabel={
-            isFavorite
-              ? translate("demoPodcastListScreen.accessibility.unfavoriteIcon")
-              : translate("demoPodcastListScreen.accessibility.favoriteIcon")
-          }
           LeftAccessory={ButtonLeftAccessory}
         >
           <Text
             size="xxs"
             accessibilityLabel={episode.duration.accessibilityLabel}
             weight="medium"
-            text={
-              isFavorite
-                ? translate("demoPodcastListScreen.unfavoriteButton")
-                : translate("demoPodcastListScreen.favoriteButton")
-            }
           />
         </Button>
       }

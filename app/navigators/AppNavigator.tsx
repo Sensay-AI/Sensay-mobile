@@ -59,10 +59,12 @@ const AppStack = observer(function AppStack() {
   // @demo remove-block-start
   const {
     authenticationStore: { isAuthenticated },
+    userStore: {isUser}
   } = useStores()
   const WELCOME_PAGE = "Welcome"
   const LOGIN_PAGE = "Login"
   const UPDATE_PROFILE_PAGE = "UpdateProfile"
+  const isAuthenticatedUser = isAuthenticated && isUser
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
@@ -71,7 +73,7 @@ const AppStack = observer(function AppStack() {
       {isAuthenticated ? (
         <>
           <Stack.Screen name={WELCOME_PAGE} component={Screens.WelcomeScreen} />
-          <Stack.Screen name="Demo" component={DemoNavigator} />
+          {isAuthenticatedUser && <Stack.Screen name="Demo" component={DemoNavigator} />}
           <Stack.Screen name={UPDATE_PROFILE_PAGE} component={Screens.UpdateProfileScreen}/>
         </>
       ) : (

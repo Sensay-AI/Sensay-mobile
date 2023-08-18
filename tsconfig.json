@@ -16,9 +16,7 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "baseUrl": "./",
-    "typeRoots": [
-      "./app/types"
-    ]
+    "types": ["...", "@types/jest"]
   },
   "exclude": ["node_modules"],
   "include": ["index.js", "App.js", "app", "test", "*.js"],

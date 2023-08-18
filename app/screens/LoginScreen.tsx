@@ -2,49 +2,26 @@ import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
-  Button as IgniteButton, Icon,
-  Menu, MenuItem,
-  Screen, Text,
+  Button as IgniteButton, Icon, LanguageMenu,
+  Screen,
 } from "../components"
 import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
-import { Button, IconButton } from "react-native-paper"
-import i18n from "i18n-js"
+import { IconButton } from "react-native-paper"
 import { Credentials, useAuth0 } from "react-native-auth0"
-import { SENSAYAI_LOGO } from "../utils/images"
 import { useStores } from "../models"
+import { useForceUpdate } from "../utils/useForceUpdate"
 
 interface LoginScreenProps extends AppStackScreenProps<"Login"> {
 }
+const SENSAYAI_LOGO = require("../../assets/images/sensay-ai-login-logo.png")
 
 type SocialConnectionTypes = "google-oauth2" | "facebook" | "apple"
 export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_props) {
-
-  const [languageMenuVisible, setLanguageMenuVisible] = React.useState(false)
-  const openLanguageMenu = () => setLanguageMenuVisible(true)
-  const closeLanguageMenu = () => setLanguageMenuVisible(false)
-
+  const forceUpdate = useForceUpdate();
   const {
     authenticationStore: { setAuthToken, distributeAuthToken },
   } = useStores()
-  const languageMenuItems = [
-    new MenuItem("vietnamese", () => {
-      i18n.locale = "vi"
-      closeLanguageMenu()
-    }),
-    new MenuItem("english", () => {
-      i18n.locale = "en"
-      closeLanguageMenu()
-    }),
-    new MenuItem("korean", () => {
-      i18n.locale = "ko"
-      closeLanguageMenu()
-    }),
-    new MenuItem("arabic", () => {
-      i18n.locale = "ar"
-      closeLanguageMenu()
-    }),
-  ]
   const { authorize, error, getCredentials } = useAuth0()
 
   async function authorizeWithSocial(connectionType: SocialConnectionTypes): Promise<void> {
@@ -76,7 +53,6 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
     await authorizeWithSocial("apple")
   }
 
-  const allowLanguagePrefix = ["en", "vi", "ko", "ar"]
   return (
     <Screen
       preset="auto"
@@ -85,31 +61,17 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
       KeyboardAvoidingViewProps={{ behavior: "padding" }}
     >
       <View style={$topButtonGroupContainerStyle}>
-        <View>
-          <Menu
-            visible={languageMenuVisible}
-            setVisible={setLanguageMenuVisible}
-            onDismiss={closeLanguageMenu}
-            menuItems={languageMenuItems}
-            anchor={
-              <Button icon="menu-down" mode="text" style={$languageButton}
-                      contentStyle={$languageButtonContentStyle}
-                      onPress={openLanguageMenu}
-              >
-                <Text> {allowLanguagePrefix.includes(i18n.locale.substring(0, 2).toLowerCase()) && i18n.locale.substring(0, 2) || "en"} </Text>
-              </Button>
-            }></Menu>
-        </View>
+        <LanguageMenu  forceUpdateHook={forceUpdate}/>
         <View style={$settingIconButtonContainerStyle}>
           <IconButton icon="cog" size={20} onPress={() => console.log("Pressed")} />
         </View>
       </View>
       <View style={$topContainer}>
-        <Image style={$welcomeLogo} source={{ uri: SENSAYAI_LOGO }} resizeMode="contain" />
+        <Image style={$welcomeLogo} source={SENSAYAI_LOGO } resizeMode="contain" />
       </View>
       <View style={$loginButtonContainerStyle}>
         <IgniteButton
-          testID="login-button"
+          testID="login-facebook-button"
           tx="loginScreen.continueWithFacebook"
           style={$tapButtonWithFacebook}
           preset="reversed"
@@ -118,7 +80,7 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
         ></IgniteButton>
 
         <IgniteButton
-          testID="login-button"
+          testID="login-google-button"
           tx="loginScreen.continueWithGoogle"
           textStyle={{ color: colors.text } as TextStyle}
           style={$tapButtonWithGoogle}
@@ -126,8 +88,9 @@ export const LoginScreen: FC<LoginScreenProps> = observer(function LoginScreen(_
           onPress={loginWithGoogle}
           LeftAccessory={(_) => <Icon icon="google" containerStyle={{ paddingRight: 15 } as ViewStyle} />}
         ></IgniteButton>
+
         <IgniteButton
-          testID="login-button"
+          testID="login-apple-button"
           tx="loginScreen.continueWithApple"
           style={$tapButtonWithApple}
           preset="reversed"
@@ -179,14 +142,6 @@ const $tapButtonWithApple: ViewStyle = {
   justifyContent: "flex-start",
 }
 
-const $languageButton: ViewStyle = {
-  flexWrap: "wrap",
-}
-
-const $languageButtonContentStyle: ViewStyle = {
-  flexDirection: "row-reverse",
-  justifyContent: "flex-end",
-}
 const $settingIconButtonContainerStyle: ViewStyle = {
   flex: 1,
   flexDirection: "row",

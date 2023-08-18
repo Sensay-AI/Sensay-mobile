@@ -3,8 +3,7 @@ export * from "./WelcomeScreen"
 export * from "./LoginScreen"
 export * from "./DemoCommunityScreen"
 export * from "./SettingScreen"
-export * from "./DemoShowroomScreen/DemoShowroomScreen"
 // @demo remove-block-end
 export * from "./ErrorScreen/ErrorBoundary"
-// export other screens here
 export * from "./UpdateProfileScreen"
+export * from "./HomePageScreen"

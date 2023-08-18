@@ -45,8 +45,8 @@ export const SettingScreen: FC<DemoTabScreenProps<"Setting">> = function Setting
       />
       <Text
         style={$reportBugsLink}
-        tx="settingScreen.reportBugs"
-        onPress={() => openLinkInBrowser("https://github.com/orgs/Sensay-AI/discussions/new?category=q-a")}
+        tx="settingScreen.giveFeedback"
+        onPress={() => openLinkInBrowser("https://docs.google.com/forms/d/e/1FAIpQLSc_jiGrDzaUurpjmtz9eYp_Dhkp4ujR7ilTPTCgFmyT6Ha-oQ/viewform")}
       />
       <View style={$buttonContainer}>
         <Button style={$button} tx="common.logOut" onPress={logOutApp} textStyle={$buttonText} />

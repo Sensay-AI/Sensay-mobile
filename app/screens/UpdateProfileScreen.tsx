@@ -13,13 +13,14 @@ import { launchImageLibrary } from "react-native-image-picker"
 import { CountryPicker } from "react-native-country-picker-modal/lib/CountryPicker"
 import SectionedMultiSelect from "react-native-sectioned-multi-select"
 import { MaterialIcons } from "@expo/vector-icons"
-import { items as languages } from "../utils/languages"
+import { items as languages, languagesAssociateById, languagesNameToId } from "../utils/languages"
 import { translate } from "../i18n"
 import { IconButton } from "react-native-paper"
 import { useAuth0 } from "react-native-auth0"
 import { genders } from "../utils/genders"
 import { useStores } from "../models"
 import PhoneInput from "react-native-phone-number-input"
+import { useSelectedLanguages } from "../utils/useSelectedLanguages"
 
 interface UpdateProfileScreenProps extends NativeStackScreenProps<AppStackScreenProps<"UpdateProfile">> {
 }
@@ -27,17 +28,6 @@ interface UpdateProfileScreenProps extends NativeStackScreenProps<AppStackScreen
 const DEFAULT_DATE_OF_BIRTH = new Date(1999, 0, 1)
 
 const MIN_DATE_OF_BIRTH = new Date(1900, 0, 1)
-
-const languagesIdToName: { [key: string]: string } = languages[0].children.reduce((acc, item) => {
-  acc[item.id] = item.name
-  return acc
-}, {})
-
-const languagesNameToId: { [key: string]: number } = Object.keys(languagesIdToName).reduce((ret, key) => {
-  ret[languagesIdToName[key]] = +key
-  return ret
-}, {})
-
 
 export const UpdateProfileScreen: FC<UpdateProfileScreenProps> = observer(function UpdateProfileScreen(_props) {
   // Pull in one of our MST stores
@@ -51,12 +41,8 @@ export const UpdateProfileScreen: FC<UpdateProfileScreenProps> = observer(functi
   const [countryCode, setCountryCode] = useState<CountryCode>(isUser ? JSON.parse(user.country).cca2 : "")
   const [openDateOfBirthPicker, setOpenDateOfBirthPicker] = useState(false)
   const [openPhoneInput, setOpenPhoneInput] = useState(false)
-  const [selectedLanguages, setSelectedLanguages] = useState<number[]>(
-    isUser ?
-      user.language.split(",").map((name) =>
-        languagesNameToId[name],
-      )
-      : [],
+  const [selectedLanguages, setSelectedLanguages] = useSelectedLanguages(
+    isUser ? user.language.split(",").map((name) => languagesNameToId[name]) : []
   )
   const [isLoading, setIsLoading] = React.useState(false)
 
@@ -418,7 +404,7 @@ export const UpdateProfileScreen: FC<UpdateProfileScreenProps> = observer(functi
                   onSelectedItemsChange={(items) => {
                     setSelectedLanguages(items)
                     handleChange("languages")
-                    setFieldValue("languages", items.map(item => languagesIdToName[item.toString()])).then(r => console.debug(r))
+                    setFieldValue("languages", items.map(item => languagesAssociateById[item.toString()])).then(r => console.debug(r))
                   }}
                   selectedItems={selectedLanguages}
                   expandDropDowns={true}
