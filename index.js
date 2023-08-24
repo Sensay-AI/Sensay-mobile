@@ -6,6 +6,8 @@ import App from "./app/app.tsx"
 import React from "react"
 import { AppRegistry } from "react-native"
 import RNBootSplash from "react-native-bootsplash"
+import 'react-native-polyfill-globals/auto';
+import 'react-native-url-polyfill/auto';
 
 function IgniteApp() {
   return <App hideSplashScreen={RNBootSplash.hide} />

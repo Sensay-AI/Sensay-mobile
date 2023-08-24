@@ -111,6 +111,16 @@ export const iconRegistry = {
   view: require("../../assets/icons/view.png"),
   x: require("../../assets/icons/x.png"),
   home: require("../../assets/icons/home.png"),
+  pathway: require("../../assets/icons/pathway.png"),
+  vocab: require("../../assets/icons/vocab.png"),
+  grammar: require("../../assets/icons/grammar.png"),
+  listening: require("../../assets/icons/listening.png"),
+  writing: require("../../assets/icons/writing.png"),
+  reading: require("../../assets/icons/reading.png"),
+  quest: require("../../assets/icons/quest.png"),
+  speaking: require("../../assets/icons/speaking.png"),
+  sentChat: require("../../assets/icons/send-chat.png"),
+  reload: require("../../assets/icons/reload.png"),
 }
 
 const $imageStyle: ImageStyle = {

@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import { Linking, TextStyle, View, ViewStyle } from "react-native"
 import { Button, Screen, Text } from "../components"
-import { DemoTabScreenProps } from "../navigators/DemoNavigator"
+import { MainTabScreenProps } from "../navigators/MainTabNavigator"
 import { colors, spacing } from "../theme"
 import { isRTL } from "../i18n"
 import { useStores } from "../models"
@@ -11,7 +11,7 @@ function openLinkInBrowser(url: string) {
   Linking.canOpenURL(url).then((canOpen) => canOpen && Linking.openURL(url))
 }
 
-export const SettingScreen: FC<DemoTabScreenProps<"Setting">> = function SettingScreen(
+export const SettingScreen: FC<MainTabScreenProps<"Setting">> = function SettingScreen(
   _props,
 ) {
   const {

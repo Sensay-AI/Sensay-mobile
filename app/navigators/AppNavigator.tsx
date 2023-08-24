@@ -17,7 +17,7 @@ import { useColorScheme } from "react-native"
 import * as Screens from "app/screens"
 import Config from "../config"
 import { useStores } from "../models" // @demo remove-current-line
-import { DemoNavigator, DemoTabParamList } from "./DemoNavigator" // @demo remove-current-line
+import { MainTabNavigator, MainTabParamList } from "./MainTabNavigator" // @demo remove-current-line
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "app/theme"
 
@@ -36,9 +36,9 @@ import { colors } from "app/theme"
  */
 export type AppStackParamList = {
   Welcome: undefined
-  Login: undefined // @demo remove-current-line
-  Demo: NavigatorScreenParams<DemoTabParamList>
-  UpdateProfile: undefined // @demo remove-current-line
+  Login: undefined
+  MainTab: NavigatorScreenParams<MainTabParamList>
+  UpdateProfile: undefined
 }
 
 /**
@@ -73,7 +73,7 @@ const AppStack = observer(function AppStack() {
       {isAuthenticated ? (
         <>
           <Stack.Screen name={WELCOME_PAGE} component={Screens.WelcomeScreen} />
-          {isAuthenticatedUser && <Stack.Screen name="Demo" component={DemoNavigator} />}
+          {isAuthenticatedUser && <Stack.Screen name="MainTab" component={MainTabNavigator} />}
           <Stack.Screen name={UPDATE_PROFILE_PAGE} component={Screens.UpdateProfileScreen}/>
         </>
       ) : (

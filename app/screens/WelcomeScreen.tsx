@@ -12,15 +12,14 @@ import { colors, spacing } from "../theme"
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { useAuth0 } from "react-native-auth0"
 import { useHeader } from "../utils/useHeader"
+import { welcomeFace, welcomeLogo } from "../utils/images"
 
-const welcomeLogo = require("../../assets/images/app-icon-all.png")
-const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {
 }
 
 export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(
-  _props, // @demo remove-current-line
+  _props,
 ) {
   const { navigation } = _props
   const {
@@ -37,7 +36,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
   const onDismissSnackBar = () => setSnackBarVisible(false)
 
   function goNext() {
-    navigation.navigate("Demo", { screen: "HomePage" })
+    navigation.navigate("MainTab", { screen: "HomePage" })
   }
 
   function goCreateProfile() {
@@ -104,11 +103,11 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
         {!isConnect &&
           <View>
             {isLoading && <ActivityIndicator />}
-            <EmptyState
+            {!isLoading && <EmptyState
               preset="generic"
               buttonOnPress={fetchingUser}
               ImageProps={{ resizeMode: "contain" }}
-            />
+            />}
             <Snackbar
               style={$snackBar}
               visible={snackBarVisible}

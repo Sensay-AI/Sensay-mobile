@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
-import { LanguageMenu, Screen, Text } from "app/components"
-import { DemoTabScreenProps } from "../navigators/DemoNavigator"
+import { Button, CaretRightIcon, LanguageMenu, Screen, Text } from "app/components"
+import { MainTabScreenProps } from "../navigators/MainTabNavigator"
 import { colors, spacing } from "../theme"
 import { translate } from "../i18n"
 import { useStores } from "../models"
@@ -18,14 +18,15 @@ import {
 } from "../utils/languages"
 import { MaterialIcons } from "@expo/vector-icons"
 import { useSelectedLanguages } from "../utils/useSelectedLanguages"
+import { welcomeLogo } from "../utils/images"
 
-const welcomeLogo = require("../../assets/images/app-icon-all.png")
 
 
-export const HomePageScreen: FC<DemoTabScreenProps<"HomePage">> = observer(function HomePageScreen(
+export const HomePageScreen: FC<MainTabScreenProps<"HomePage">> = observer(function HomePageScreen(
   _props, // @demo remove-current-line
 ) {
   const forceUpdate = useForceUpdate()
+  const { navigation } = _props
 
   const {
     userStore, languageSettingStore: { setLearningLanguage, getLearningLanguage },
@@ -60,7 +61,8 @@ export const HomePageScreen: FC<DemoTabScreenProps<"HomePage">> = observer(funct
         <LanguageMenu forceUpdateHook={forceUpdate} />
       </View>
 
-      <Text style={$label} tx={selectedLanguages[0] ? "homePage.learningLanguage" : "homePage.selectLearningLanguage"} />
+      <Text style={$label}
+            tx={selectedLanguages[0] ? "homePage.learningLanguage" : "homePage.selectLearningLanguage"} />
       <SectionedMultiSelect
         styles={{ selectToggle: $selectBox, selectToggleText: { textAlign: "left" } }}
         items={languages}
@@ -82,7 +84,7 @@ export const HomePageScreen: FC<DemoTabScreenProps<"HomePage">> = observer(funct
         expandDropDowns={true}
         single={true}
       />
-      {selectedLanguages[0] &&
+      {selectedLanguages.length > 0 &&
         <View>
           <Text style={$label} tx={"homePage.countrySpeakingThatLanguage"}
                 txOptions={{ lang: languagesAssociateById[selectedLanguages[0]].name }}></Text>
@@ -107,6 +109,14 @@ export const HomePageScreen: FC<DemoTabScreenProps<"HomePage">> = observer(funct
               }}
             />
           </View>
+          <Button
+            style={$button}
+            tx={"homePage.startStructurePathway"}
+            txOptions={{lang: getLearningLanguage}}
+            textStyle={$buttonText}
+            LeftAccessory={CaretRightIcon}
+            onPress={() => navigation.push("MainTab", { screen: "StructurePathway" })}
+          />
         </View>
       }
 
@@ -135,6 +145,7 @@ const $countryIconButtonContainerStyle: ViewStyle = {
   flex: 1,
   flexDirection: "row",
   justifyContent: "flex-start",
+  paddingBottom: spacing.md,
 }
 const $selectBox: ViewStyle = {
   borderColor: colors.border,
@@ -145,4 +156,15 @@ const $selectBox: ViewStyle = {
 }
 const $label: TextStyle = {
   marginTop: 5,
+}
+const $buttonText: TextStyle = {
+  fontWeight: "bold",
+  color: colors.palette.primary400,
+}
+const $button: ViewStyle = {
+  backgroundColor: colors.palette.neutral700,
+  paddingVertical: 8,
+  paddingHorizontal: 16,
+  borderRadius: 20,
+  marginHorizontal: 10,
 }
