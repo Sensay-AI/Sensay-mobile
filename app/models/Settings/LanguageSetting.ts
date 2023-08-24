@@ -1,6 +1,6 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
-import { withSetPropAction } from "./helpers/withSetPropAction"
-import { allowLanguagePrefix, DisplayLanguage, languagesNameToId } from "../utils/languages"
+import { withSetPropAction } from "../helpers/withSetPropAction"
+import { allowLanguagePrefix, DisplayLanguage, languagesNameToId } from "../../utils/languages"
 import i18n from "i18n-js"
 
 
@@ -24,7 +24,7 @@ function getDefaultDisplayLanguage(): DisplayLanguage {
 export const LanguageSettingModel = types
   .model("LanguageSetting")
   .props({
-    displayLanguage: types.frozen<DisplayLanguage>(),
+    displayLanguage: types.frozen<DisplayLanguage>(getDefaultDisplayLanguage()),
     learningLanguage: types.maybe(types.string),
   })
   .actions(withSetPropAction)

@@ -1,8 +1,8 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
-import { api, CreateUserInput, UpdateUserInput } from "../services/api"
-import { withSetPropAction } from "./helpers/withSetPropAction"
+import { api, CreateUserInput, UpdateUserInput } from "../../services/api"
+import { withSetPropAction } from "../helpers/withSetPropAction"
 import { UserModel, UserSnapshotIn } from "./User"
-import { GeneralApiProblem } from "../services/api/apiProblem"
+import { GeneralApiProblem } from "../../services/api/apiProblem"
 export const UserStoreModel = types
   .model("UserStore")
   .props({

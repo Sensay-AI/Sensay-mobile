@@ -33,6 +33,7 @@ import Config from "./config"
 import { Auth0Provider } from "react-native-auth0"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { ViewStyle } from "react-native"
+import { CountryModalProvider } from "react-native-country-picker-modal"
 
 export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
 
@@ -51,7 +52,6 @@ const config = {
         },
         DemoDebug: "debug",
         DemoPodcastList: "podcast",
-        DemoCommunity: "community",
       },
     },
   },
@@ -106,17 +106,19 @@ function App(props: AppProps) {
   return (
     <GestureHandlerRootView style={{ flex: 1 } as ViewStyle}>
       <PaperProvider>
-        <Auth0Provider domain={auth0Config.domain} clientId={auth0Config.clientId}>
-          <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-            <ErrorBoundary catchErrors={Config.catchErrors}>
-              <AppNavigator
-                linking={linking}
-                initialState={initialNavigationState}
-                onStateChange={onNavigationStateChange}
-              />
-            </ErrorBoundary>
-          </SafeAreaProvider>
-        </Auth0Provider>
+        <CountryModalProvider>
+          <Auth0Provider domain={auth0Config.domain} clientId={auth0Config.clientId}>
+            <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+              <ErrorBoundary catchErrors={Config.catchErrors}>
+                <AppNavigator
+                  linking={linking}
+                  initialState={initialNavigationState}
+                  onStateChange={onNavigationStateChange}
+                />
+              </ErrorBoundary>
+            </SafeAreaProvider>
+          </Auth0Provider>
+        </CountryModalProvider>
       </PaperProvider>
     </GestureHandlerRootView>
   )

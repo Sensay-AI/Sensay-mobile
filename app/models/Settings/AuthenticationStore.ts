@@ -1,6 +1,6 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
-import { withSetPropAction } from "./helpers/withSetPropAction"
-import { api } from "../services/api"
+import { withSetPropAction } from "../helpers/withSetPropAction"
+import { api } from "../../services/api"
 import { Credentials } from "react-native-auth0"
 
 export const AuthenticationStoreModel = types
@@ -11,10 +11,10 @@ export const AuthenticationStoreModel = types
   .actions(withSetPropAction)
   .actions((store) => ({
     setAuthToken(value?: Credentials) {
-      store.accessToken = value.accessToken
+      store.setProp("accessToken", value.accessToken )
     },
     logout() {
-      store.accessToken = undefined
+      store.setProp("accessToken",undefined)
     },
     distributeAuthToken(value?: string) {
       // optionally grab the store's authToken if not passing a value

@@ -1,5 +1,5 @@
 import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
-import { withSetPropAction } from "./helpers/withSetPropAction"
+import { withSetPropAction } from "../helpers/withSetPropAction"
 /**
  * This represents a User of Sensay AI app.
  */

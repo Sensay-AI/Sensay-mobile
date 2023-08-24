@@ -21,6 +21,7 @@ import { genders } from "../utils/genders"
 import { useStores } from "../models"
 import PhoneInput from "react-native-phone-number-input"
 import { useSelectedLanguages } from "../utils/useSelectedLanguages"
+import { notEmpty } from "../utils/notEmpty"
 
 interface UpdateProfileScreenProps extends NativeStackScreenProps<AppStackScreenProps<"UpdateProfile">> {
 }
@@ -41,9 +42,8 @@ export const UpdateProfileScreen: FC<UpdateProfileScreenProps> = observer(functi
   const [countryCode, setCountryCode] = useState<CountryCode>(isUser ? JSON.parse(user.country).cca2 : "")
   const [openDateOfBirthPicker, setOpenDateOfBirthPicker] = useState(false)
   const [openPhoneInput, setOpenPhoneInput] = useState(false)
-  const [selectedLanguages, setSelectedLanguages] = useSelectedLanguages(
-    isUser ? user.language.split(",").map((name) => languagesNameToId[name]) : []
-  )
+  const defaultLanguages = isUser ? user.language.split(",").map((name) => languagesNameToId[name]).filter(notEmpty) : []
+  const [selectedLanguages, setSelectedLanguages] = useSelectedLanguages(defaultLanguages)
   const [isLoading, setIsLoading] = React.useState(false)
 
   function getGender(genderEnumName: string) {
@@ -218,6 +218,8 @@ export const UpdateProfileScreen: FC<UpdateProfileScreenProps> = observer(functi
     ;(async function load() {
       await fetchUser()
     })()
+    console.log(defaultLanguages)
+
   }, [])
 
   return (
@@ -404,6 +406,7 @@ export const UpdateProfileScreen: FC<UpdateProfileScreenProps> = observer(functi
                   onSelectedItemsChange={(items) => {
                     setSelectedLanguages(items)
                     handleChange("languages")
+                    console.log(items)
                     setFieldValue("languages", items.map(item => languagesAssociateById[item.toString()])).then(r => console.debug(r))
                   }}
                   selectedItems={selectedLanguages}
