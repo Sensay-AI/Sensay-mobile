@@ -112,13 +112,19 @@ export const StructurePathwayVocabLessonScreen: FC<StructurePathwayVocabLessonSc
                     level: route.params.level,
                     categoryName: item.category_name,
                     categoryId: item.id,
-                    isFromDetailScreen: false
+                    isFromDetailScreen: false,
                   })
                 }}>
                   <Text style={$itemText} text={item.category_name.toString()}></Text>
                 </TouchableOpacity>
               ),
-              scrollEnabled: true
+              scrollEnabled: true,
+            }}
+            onSubmitEditing={() => {
+              navigation.push("DetailVocabLesson", {
+                level: route.params.level,
+                query,
+              })
             }}
             onFocus={() => setIsAutoCompleteFocused(true)}
           />

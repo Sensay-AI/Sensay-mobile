@@ -7,7 +7,8 @@ import { StructurePathwayStackScreenProps } from "../navigators/MainTabNavigator
 import { useStores } from "../models"
 import { useMap } from "../utils/useMap"
 
-interface StructurePathwayVocabLessonDetailScreenProps extends StructurePathwayStackScreenProps<"DetailVocabLessonFromHistory"> {}
+interface StructurePathwayVocabLessonDetailScreenProps extends StructurePathwayStackScreenProps<"DetailVocabLessonFromHistory"> {
+}
 
 export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePathwayVocabLessonDetailScreenProps> = observer(function StructurePathwayVocabLessonDetailScreenFromHistory(
   _props,
@@ -17,8 +18,8 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
     languageSettingStore: { getLearningLanguage },
     pathwayVocabLessonStore: { fetchCategoryHistoryDetail, vocabLessonDetailFromHistory },
   } = useStores()
-  const [ loading, setLoading] = useState(false)
-  const [ isSeeTranslation, setIsSeeTranslation] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [isSeeTranslation, setIsSeeTranslation] = useState(false)
 
   const initMap = new Map<number, boolean>()
 
@@ -64,7 +65,7 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
           color={colors.tint}
           onPress={() => {
             if (route.params.isFromDetailScreen) {
-              return navigation.push("VocabLesson", {level: route.params.level})
+              return navigation.push("VocabLesson", { level: route.params.level })
             }
             return navigation.goBack()
           }}
@@ -83,7 +84,7 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
       <View style={$backButtonContainerStyle}>
         <Text
           tx={"structurePathway.vocabLesson.contextTitle"}
-          txOptions={{context: route.params.categoryName}}
+          txOptions={{ context: route.params.categoryName }}
           style={$contextTitle}
         />
         <Icon
@@ -99,11 +100,12 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
         {loading && <ActivityIndicator />}
       </View>
 
-      { vocabLessonDetailFromHistory?.length > 0 && !loading &&
+      {vocabLessonDetailFromHistory?.length > 0 && !loading &&
         <View>
-          <ListItem text={isSeeTranslation ? vocabLessonDetailFromHistory[0].translations[0].translated_text :vocabLessonDetailFromHistory[0].prompt}
-                    bottomSeparator={true}
-                    containerStyle={$lessonContainer}/>
+          <ListItem
+            text={isSeeTranslation ? vocabLessonDetailFromHistory[0].translations[0].translated_text : vocabLessonDetailFromHistory[0].prompt}
+            bottomSeparator={true}
+            containerStyle={$lessonContainer} />
           <View style={$reloadIcon}>
             <Text
               tx={"structurePathway.vocabLesson.seeTranslation"}
@@ -113,10 +115,12 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
 
           {vocabLessonDetailFromHistory[0].questions.map((question, inx) =>
             <View key={`${question.id}-${question.prompt_id}`}>
-              <ListItem text={`${inx+1}) ${isSeeTranslation? question.translations[0].translated_text : question.question_text}`} bottomSeparator={false} key={question.id} />
+              <ListItem
+                text={`${inx + 1}) ${isSeeTranslation ? question.translations[0].translated_text : question.question_text}`}
+                bottomSeparator={false} key={question.id} />
               {question.answers.map(answer => {
                   return <ListItem
-                    text={isSeeTranslation? answer.translations[0].translated_text : answer.answer_text}
+                    text={isSeeTranslation ? answer.translations[0].translated_text : answer.answer_text}
                     bottomSeparator={false}
                     key={answer.id}
                     containerStyle={
@@ -135,21 +139,24 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
             </View>,
           )
           }
-        </View> ||
-        <View>
-          {!loading && <Button
-            style={$button}
-            tx={"structurePathway.vocabLesson.noHistoryFound"}
-            txOptions={{ lang: getLearningLanguage, context: route.params.categoryName }}
-            textStyle={$buttonText}
-            LeftAccessory={CaretRightIcon}
-            onPress={() => navigation.push("DetailVocabLesson", {
-              level: route.params.level,
-              query: route.params.categoryName,
-            })}
-          />}
         </View>
       }
+
+      {vocabLessonDetailFromHistory?.length === 0 && !loading &&
+      <View>
+        {!loading && <Button
+          style={$button}
+          tx={"structurePathway.vocabLesson.noHistoryFound"}
+          txOptions={{ lang: getLearningLanguage, context: route.params.categoryName }}
+          textStyle={$buttonText}
+          LeftAccessory={CaretRightIcon}
+          onPress={() => navigation.push("DetailVocabLesson", {
+            level: route.params.level,
+            query: route.params.categoryName,
+          })}
+        />}
+        {loading && <ActivityIndicator />}
+      </View>}
 
     </Screen>
   )
@@ -162,7 +169,7 @@ const $screenContainer: ViewStyle = {
 }
 const $backButtonContainerStyle: ViewStyle = {
   flexDirection: "row",
-  flex: 1
+  flex: 1,
 }
 const $titleContainerStyle: ViewStyle = {
   flexDirection: "row",
@@ -210,16 +217,16 @@ const $buttonText: TextStyle = {
   color: colors.palette.neutral100,
 }
 const $backIcon: ViewStyle = {
-  paddingTop: spacing.xxs
+  paddingTop: spacing.xxs,
 }
 const $reloadIcon: ViewStyle = {
   flex: 1,
   flexDirection: "row",
   justifyContent: "flex-end",
-  paddingRight: spacing.md
+  paddingRight: spacing.md,
 }
 const $contextTitle: TextStyle = {
-  paddingLeft: spacing.md
+  paddingLeft: spacing.md,
 }
 const $button: ViewStyle = {
   backgroundColor: colors.palette.neutral700,

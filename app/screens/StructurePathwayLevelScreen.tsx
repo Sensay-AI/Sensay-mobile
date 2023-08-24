@@ -48,7 +48,7 @@ const DATA: LessonMetadata[] = [
   },
   {
     lessonName: "structurePathway.levelSelection.grammar1",
-    disable: false,
+    disable: true,
     type: "grammar",
     level: 2,
   },

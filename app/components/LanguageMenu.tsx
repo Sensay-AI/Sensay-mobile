@@ -14,19 +14,20 @@ export interface LanguageMenuProps {
    */
   style?: StyleProp<ViewStyle>
   forceUpdateHook?: any
+  isShowStoreDisplayLanguage?: boolean
 }
 
 /**
  * Describe your component here
  */
 export const LanguageMenu = observer(function LanguageMenu(props: LanguageMenuProps) {
-  const { style, forceUpdateHook } = props
+  const { style, forceUpdateHook, isShowStoreDisplayLanguage } = props
   const $styles = [$container, style]
   const [languageMenuVisible, setLanguageMenuVisible] = React.useState(false)
   const openLanguageMenu = () => setLanguageMenuVisible(true)
   const closeLanguageMenu = () => setLanguageMenuVisible(false)
   const {
-    languageSettingStore: { setDisplayLanguage },
+    languageSettingStore: { setDisplayLanguage, getDisplayLanguage },
   } = useStores()
   const languageMenuItems = [
     new MenuItem("vietnamese", () => {
@@ -66,7 +67,7 @@ export const LanguageMenu = observer(function LanguageMenu(props: LanguageMenuPr
                   contentStyle={$languageButtonContentStyle}
                   onPress={openLanguageMenu}
           >
-            <Text> {allowLanguagePrefix.includes(i18n.locale.substring(0, 2).toLowerCase()) && i18n.locale.substring(0, 2) || "en"}   </Text>
+            <Text> { isShowStoreDisplayLanguage ? getDisplayLanguage : allowLanguagePrefix.includes(i18n.locale.substring(0, 2).toLowerCase()) && i18n.locale.substring(0, 2) || "en"}   </Text>
           </Button>
         }></Menu>
     </View>
