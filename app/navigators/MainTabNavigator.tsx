@@ -26,7 +26,7 @@ export type MainTabParamList = {
   StructurePathway: NavigatorScreenParams<StructurePathwayStackParamList>
 }
 export type StructurePathwayStackParamList = {
-  Level: undefined
+  StructurePathwaySelectLessonAndLevel: undefined
   VocabLesson: {level : number}
   DetailVocabLesson: {query : string, level: number}
   DetailVocabLessonFromHistory: {categoryName : string, level: number, categoryId: number, isFromDetailScreen: boolean}
@@ -72,9 +72,9 @@ const StructurePathwayStack = observer(function StructurePathwayStack() {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
-      initialRouteName={"Level"}
+      initialRouteName={"StructurePathwaySelectLessonAndLevel"}
     >
-      <Stack.Screen name="Level" component={StructurePathwayLevelScreen} />
+      <Stack.Screen name="StructurePathwaySelectLessonAndLevel" component={StructurePathwayLevelScreen} />
       <Stack.Screen name="VocabLesson" component={StructurePathwayVocabLessonScreen} />
       <Stack.Screen name="DetailVocabLesson" component={StructurePathwayVocabLessonDetailScreen} />
       <Stack.Screen name="DetailVocabLessonFromHistory" component={StructurePathwayVocabLessonDetailFromHistoryScreen} />

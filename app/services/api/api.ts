@@ -165,7 +165,7 @@ export class Api {
 
   async getPathWayVocabLessonCategory(
     page = 1,
-    size = 20,
+    size = 10,
   ): Promise<{ kind: "ok"; categories: PathwayVocabLessonCategorySnapshotIn[] } | GeneralApiProblem> {
     // make the api call
     const response: ApiResponse<PathwayVocabCategoryResponse> = await this.apisauce.get(

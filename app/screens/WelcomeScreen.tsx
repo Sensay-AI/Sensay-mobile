@@ -2,12 +2,12 @@ import { observer } from "mobx-react-lite"
 import React, { FC, useEffect } from "react"
 import { ActivityIndicator, Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import {
-  Button, EmptyState, Snackbar, // @demo remove-current-line
+  Button, EmptyState, Snackbar,
   Text,
 } from "../components"
 import { isRTL, translate } from "../i18n"
-import { useStores } from "../models" // @demo remove-current-line
-import { AppStackScreenProps } from "../navigators" // @demo remove-current-line
+import { useStores } from "../models"
+import { AppStackScreenProps } from "../navigators"
 import { colors, spacing } from "../theme"
 import { useSafeAreaInsetsStyle } from "../utils/useSafeAreaInsetsStyle"
 import { useAuth0 } from "react-native-auth0"
@@ -30,6 +30,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
 
   const [isLoading, setIsLoading] = React.useState(false)
   const [isConnect, setIsConnect] = React.useState(true)
+  const [canCreatProfile, setCanCreatProfile] = React.useState(false)
   const [snackBarVisible, setSnackBarVisible] = React.useState(false)
   const [snackBarText, setSnackBarText] = React.useState("")
   const onToggleSnackBar = () => setSnackBarVisible(!snackBarVisible)
@@ -74,6 +75,13 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
         if (res.kind === "forbidden") {
           logOutAuth()
           userStore.logOut()
+        }
+
+        if (res.kind === "not-found") {
+          console.log("res.kind ","not found")
+          setIsConnect(true)
+          setCanCreatProfile(true)
+          return
         }
 
         return
@@ -140,7 +148,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
             preset="reversed"
             tx="welcomeScreen.letsGo"
             onPress={goNext}
-          /> || !isLoading && (<Button
+          /> || !isLoading && canCreatProfile && (<Button
             testID="next-screen-sign-up-button"
             preset="reversed"
             tx="welcomeScreen.createProfile"
