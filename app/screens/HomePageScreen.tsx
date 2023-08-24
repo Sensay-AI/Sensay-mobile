@@ -58,7 +58,7 @@ export const HomePageScreen: FC<MainTabScreenProps<"HomePage">> = observer(funct
 
       <Text style={$label} tx={"homePage.displayLanguage"} />
       <View style={$topButtonGroupContainerStyle}>
-        <LanguageMenu forceUpdateHook={forceUpdate} />
+        <LanguageMenu forceUpdateHook={forceUpdate} isShowStoreDisplayLanguage={true}/>
       </View>
 
       <Text style={$label}
