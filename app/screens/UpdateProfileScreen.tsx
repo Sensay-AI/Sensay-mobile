@@ -348,7 +348,7 @@ export const UpdateProfileScreen: FC<UpdateProfileScreenProps> = observer(functi
                         setCountryCode(country.cca2)
                         setFieldValue("country", JSON.stringify(country)).then(r => console.debug(r))
                       },
-                      withCallingCode: true,
+                      withCallingCode: false,
                       placeholder: "Click to select your nationality",
                     }}
                   />

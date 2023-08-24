@@ -117,6 +117,7 @@ const en = {
     },
     vocabLesson: {
       title: "{{lang}} Vocab Lesson {{level}}",
+      enterTheContext: "Choose or enter the context you want to learn",
       autoCompletePlaceholderLoading: "Loading data...",
       autoCompletePlaceholderAfterLoading: "Enter a context you want to learn",
       contextTitle: "Context: {{context}}",

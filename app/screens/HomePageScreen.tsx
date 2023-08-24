@@ -21,7 +21,6 @@ import { useSelectedLanguages } from "../utils/useSelectedLanguages"
 import { welcomeLogo } from "../utils/images"
 
 
-
 export const HomePageScreen: FC<MainTabScreenProps<"HomePage">> = observer(function HomePageScreen(
   _props, // @demo remove-current-line
 ) {
@@ -58,13 +57,19 @@ export const HomePageScreen: FC<MainTabScreenProps<"HomePage">> = observer(funct
 
       <Text style={$label} tx={"homePage.displayLanguage"} />
       <View style={$topButtonGroupContainerStyle}>
-        <LanguageMenu forceUpdateHook={forceUpdate} isShowStoreDisplayLanguage={true}/>
+        <LanguageMenu forceUpdateHook={forceUpdate} isShowStoreDisplayLanguage={true} />
       </View>
 
       <Text style={$label}
             tx={selectedLanguages[0] ? "homePage.learningLanguage" : "homePage.selectLearningLanguage"} />
       <SectionedMultiSelect
-        styles={{ selectToggle: $selectBox, selectToggleText: { textAlign: "left" } }}
+        styles={{
+          selectToggle: $selectBox,
+          selectToggleText: { textAlign: "left" },
+          searchBar: {backgroundColor: colors.palette.primary300},
+          searchTextInput: { color: colors.text },
+          button: {backgroundColor: colors.palette.primary300}
+        }}
         items={languages}
         selectedItems={selectedLanguages}
         // @ts-ignore
@@ -112,7 +117,7 @@ export const HomePageScreen: FC<MainTabScreenProps<"HomePage">> = observer(funct
           <Button
             style={$button}
             tx={"homePage.startStructurePathway"}
-            txOptions={{lang: getLearningLanguage}}
+            txOptions={{ lang: getLearningLanguage }}
             textStyle={$buttonText}
             LeftAccessory={CaretRightIcon}
             onPress={() => navigation.push("MainTab", { screen: "StructurePathway" })}

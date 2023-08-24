@@ -78,7 +78,7 @@ export const StructurePathwayVocabLessonScreen: FC<StructurePathwayVocabLessonSc
         <Icon
           size={30}
           color={colors.tint}
-          onPress={() => navigation.goBack()}
+          onPress={() => navigation.push("StructurePathwaySelectLessonAndLevel")}
           icon="back"
         />
         <View style={$titleContainerStyle}>
@@ -90,11 +90,11 @@ export const StructurePathwayVocabLessonScreen: FC<StructurePathwayVocabLessonSc
           />
         </View>
       </View>
-
-
+      { Platform.OS === "android" && <Text tx={"structurePathway.vocabLesson.enterTheContext"} />}
       <View style={$container}>
         <View style={$autocompleteContainer}>
           <Autocomplete
+            style={$autoCompleteTextStyle}
             containerStyle={$autoCompleteContainerStyle}
             // editable={!isLoading}
             autoCorrect={false}
@@ -210,4 +210,9 @@ const $autocompleteContainer: ViewStyle = {
 const $itemText: TextStyle = {
   fontSize: 15,
   margin: 2,
+}
+const $autoCompleteTextStyle: TextStyle = {
+  fontSize: 15,
+  margin: 2,
+  color: colors.text
 }
