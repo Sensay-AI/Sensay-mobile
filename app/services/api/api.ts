@@ -9,10 +9,21 @@ import { ApiResponse, ApisauceInstance, create } from "apisauce"
 import Config from "../../config"
 import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem" // @demo remove-current-line
 import type { ApiConfig, ApiFeedResponse, UpdateUserInput } from "./api.types"
-import { CreateUserInput, UserResponse } from "./api.types" // @demo remove-current-line
+import {
+  PathwayVocabCategoryResponse,
+  CreateUserInput,
+  UserResponse,
+  PathwayVocabCategoryHistoryDetailResponse,
+} from "./api.types" // @demo remove-current-line
 import type { EpisodeSnapshotIn } from "../../models/Episode"
-import { UserSnapshotIn } from "../../models/User"
+import { UserSnapshotIn } from "../../models/Settings/User"
 import { toString } from "./apiHelper"
+import {
+  PathwayVocabLessonCategorySnapshotIn,
+} from "../../models/StructurePathwayVocabLesson/PathwayVocabLessonCategory"
+import {
+  PathwayVocabLessonDetailFromHistorySnapshotIn,
+} from "../../models/StructurePathwayVocabLesson/PathwayVocabLessonDetailFromHistory"
 
 /**
  * Configuring the apisauce instance.
@@ -102,12 +113,12 @@ export class Api {
     // make the api call
     const response: ApiResponse<UserResponse> = await this.apisauce.post(
       `user/create`,
-          user
-      )
+      user,
+    )
 
     if (!response.ok || response.data.status_code) {
       const problem = getGeneralApiProblem(response)
-      console.error("prob:",problem)
+      console.error("prob:", problem)
       if (problem) return problem
     }
 
@@ -129,8 +140,8 @@ export class Api {
     // make the api call
     const response: ApiResponse<UserResponse> = await this.apisauce.put(
       `user/update`,
-          user
-      )
+      user,
+    )
 
     if (!response.ok || response.data.status_code) {
       const problem = getGeneralApiProblem(response)
@@ -151,6 +162,71 @@ export class Api {
       return { kind: "bad-data" }
     }
   }
+
+  async getPathWayVocabLessonCategory(
+    page = 1,
+    size = 20,
+  ): Promise<{ kind: "ok"; categories: PathwayVocabLessonCategorySnapshotIn[] } | GeneralApiProblem> {
+    // make the api call
+    const response: ApiResponse<PathwayVocabCategoryResponse> = await this.apisauce.get(
+      `lesson/vocabulary/categories`,
+      { page, size },
+    )
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      console.error(response)
+      if (problem) return problem
+    }
+    try {
+      const rawData = response.data
+      const categories: PathwayVocabLessonCategorySnapshotIn[] = rawData.items.map(
+        (raw) => ({
+          ...raw,
+        }))
+      return { kind: "ok", categories }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${toString(response.data)}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+
+  async getPathWayVocabLessonCategoryHistoryDetail(
+    categoryId: number,
+    learningLanguage: string,
+    page = 1,
+    size = 20,
+  ): Promise<{ kind: "ok"; lessonDetail: PathwayVocabLessonDetailFromHistorySnapshotIn[] } | GeneralApiProblem> {
+    // make the api call
+    const response: ApiResponse<PathwayVocabCategoryHistoryDetailResponse> = await this.apisauce.get(
+      `lesson/vocabulary/category/${categoryId}/learning_language/${learningLanguage}/questions`,
+      { page, size },
+    )
+
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      console.error(response)
+      if (problem) return problem
+    }
+
+    try {
+      const rawData = response.data
+      const lessonDetail: PathwayVocabLessonCategorySnapshotIn[] = rawData.items.map(
+        (raw) => ({
+          ...raw,
+        }))
+      return { kind: "ok", lessonDetail }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${toString(response.data)}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+
 }
 
 // Singleton instance of the API for convenience

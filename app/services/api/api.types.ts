@@ -55,6 +55,21 @@ export interface UserResponse {
   interfaceTag: 'UserResponse';
 }
 
+export interface PathwayVocabCategoryItem {
+  user_id: string,
+  id: number,
+  category_name: string,
+}
+
+export interface PathwayVocabCategoryResponse {
+  items: PathwayVocabCategoryItem[],
+  interfaceTag: 'PathwayVocabCategoryResponse';
+}
+export interface PathwayVocabCategoryHistoryDetailResponse {
+  items: any[],
+  interfaceTag: 'PathwayVocabCategoryHistoryDetailResponse';
+}
+
 export interface CreateUserInput {
   "full_name": string,
   "email": string,
