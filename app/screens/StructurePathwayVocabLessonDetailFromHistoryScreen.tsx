@@ -81,12 +81,15 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
           />
         </View>
       </View>
-      <View style={$backButtonContainerStyle}>
-        <Text
-          tx={"structurePathway.vocabLesson.contextTitle"}
-          txOptions={{ context: route.params.categoryName }}
-          style={$contextTitle}
-        />
+      <View style={$contextAndReloadContainerStyle}>
+        <View>
+          <Text
+            tx={"structurePathway.vocabLesson.contextTitle"}
+            txOptions={{ context: route.params.categoryName }}
+            style={$contextTitle}
+          />
+        </View>
+        <View>
         <Icon
           size={30}
           color={colors.tint}
@@ -94,6 +97,7 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
           containerStyle={$reloadIcon}
           icon="reload"
         />
+        </View>
       </View>
       <View style={$titleContainerStyle}>
         {loading && <Text>Fetching data...</Text>}
@@ -170,6 +174,11 @@ const $screenContainer: ViewStyle = {
 const $backButtonContainerStyle: ViewStyle = {
   flexDirection: "row",
   flex: 1,
+}
+const $contextAndReloadContainerStyle: ViewStyle = {
+  flexDirection: "row",
+  flex: 1,
+  paddingRight: spacing.xxl
 }
 const $titleContainerStyle: ViewStyle = {
   flexDirection: "row",
