@@ -98,7 +98,8 @@ const en = {
     learningLanguage: "Learning:",
     selectLearningLanguage: "Select a Language to Learn:",
     countrySpeakingThatLanguage: "Country speaking {{lang}}",
-    startStructurePathway: "Start Learning {{lang}} with Structure Pathway Lessons"
+    startStructurePathway: "Start Learning {{lang}} with Structure Pathway Lessons",
+    imageLesson: "Start Learning {{lang}} with Image Lessons"
   },
   structurePathway: {
     levelSelection: {
@@ -126,6 +127,18 @@ const en = {
       noHistoryFound: "No history found for context: {{context}} in your learning {{lang}} history, \n Click here to generate new lesson with context: {{context}} to learn {{lang}}!!",
     },
   },
+  imageLessonScreen: {
+    uploadImage: {
+      introduction: "Upload an image or choose one from the library. Get a personalized lesson in seconds!",
+      uploadImageOption: "Take a photo",
+      chooseFromGalleryOption: "Choose from your Gallery!",
+      showUploadHistoryOption: "See my image upload history",
+    },
+    uploadImageHistory: {
+      title: "Image Lesson Upload History",
+    },
+  },
+
   demoNavigator: {
     componentsTab: "Components",
     settingTab: "Setting",
@@ -136,6 +149,7 @@ const en = {
     settingsTab: "Settings",
     homeTab: "Home",
     structurePathway: "Pathway",
+    imageLesson: "Images",
   },
   settingScreen: {
     title: "Setting",

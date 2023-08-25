@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ActivityIndicator, TextStyle, View, ViewStyle } from "react-native"
-import { Button, CaretRightIcon, Icon, ListItem, Screen, Text } from "app/components"
-import { colors, spacing } from "../theme"
-import { StructurePathwayStackScreenProps } from "../navigators/MainTabNavigator"
-import { useStores } from "../models"
-import { useMap } from "../utils/useMap"
+import { Button, CaretRightIcon, Icon, ListItem, Screen, Text, TitleWithBackButton } from "app/components"
+import { colors, spacing } from "../../theme"
+import { useStores } from "../../models"
+import { useMap } from "../../utils/useMap"
+import { StructurePathwayStackScreenProps } from "../../navigators/StructurePathwayStackNavigator"
 
 interface StructurePathwayVocabLessonDetailScreenProps extends StructurePathwayStackScreenProps<"DetailVocabLessonFromHistory"> {
 }
@@ -59,28 +59,16 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
 
   return (
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
-      <View style={$backButtonContainerStyle}>
-        <Icon
-          size={30}
-          color={colors.tint}
-          onPress={() => {
-            if (route.params.isFromDetailScreen) {
-              return navigation.push("VocabLesson", { level: route.params.level })
-            }
-            return navigation.goBack()
-          }}
-          icon="back"
-          containerStyle={$backIcon}
-        />
-        <View style={$titleContainerStyle}>
-          <Text
-            style={$title}
-            preset="heading"
-            tx={"structurePathway.vocabLesson.title"}
-            txOptions={{ lang: getLearningLanguage, level: route.params.level }}
-          />
-        </View>
-      </View>
+      <TitleWithBackButton
+        title={"structurePathway.vocabLesson.title"}
+        txOptions={{ lang: getLearningLanguage, level: route.params.level }}
+        onPressBackButton={() => {
+          if (route.params.isFromDetailScreen) {
+            return navigation.push("VocabLesson", { level: route.params.level })
+          }
+          return navigation.goBack()
+        }}
+      />
       <View style={$contextAndReloadContainerStyle}>
         <View>
           <Text
@@ -171,10 +159,6 @@ const $screenContainer: ViewStyle = {
   paddingBottom: spacing.xxl,
   paddingHorizontal: spacing.lg,
 }
-const $backButtonContainerStyle: ViewStyle = {
-  flexDirection: "row",
-  flex: 1,
-}
 const $contextAndReloadContainerStyle: ViewStyle = {
   flexDirection: "row",
   flex: 1,
@@ -185,10 +169,6 @@ const $titleContainerStyle: ViewStyle = {
   justifyContent: "flex-start",
   alignContent: "flex-start",
 }
-const $title: TextStyle = {
-  marginBottom: spacing.lg,
-}
-
 const $answerNormalStyle: ViewStyle = {
   backgroundColor: colors.palette.neutral600,
   paddingVertical: 8,
@@ -224,9 +204,6 @@ const $lessonContainer: ViewStyle = {
 const $buttonText: TextStyle = {
   fontWeight: "bold",
   color: colors.palette.neutral100,
-}
-const $backIcon: ViewStyle = {
-  paddingTop: spacing.xxs,
 }
 const $reloadIcon: ViewStyle = {
   flex: 1,

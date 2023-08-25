@@ -122,6 +122,14 @@ export const HomePageScreen: FC<MainTabScreenProps<"HomePage">> = observer(funct
             LeftAccessory={CaretRightIcon}
             onPress={() => navigation.push("MainTab", { screen: "StructurePathway" })}
           />
+          <Button
+            style={$button}
+            tx={"homePage.imageLesson"}
+            txOptions={{ lang: getLearningLanguage }}
+            textStyle={$buttonText}
+            LeftAccessory={CaretRightIcon}
+            onPress={() => navigation.push("MainTab", { screen: "ImageLesson" })}
+          />
         </View>
       }
 
@@ -165,11 +173,16 @@ const $label: TextStyle = {
 const $buttonText: TextStyle = {
   fontWeight: "bold",
   color: colors.palette.primary400,
+  alignSelf: "flex-start",
+  alignContent: "flex-start",
 }
 const $button: ViewStyle = {
   backgroundColor: colors.palette.neutral700,
   paddingVertical: 8,
-  paddingHorizontal: 16,
+  paddingHorizontal: spacing.xs,
+  paddingRight: spacing.xl,
   borderRadius: 20,
   marginHorizontal: 10,
+  marginBottom: spacing.sm,
+  justifyContent: "flex-start"
 }

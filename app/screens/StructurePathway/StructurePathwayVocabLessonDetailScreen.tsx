@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ActivityIndicator, TextStyle, View, ViewStyle } from "react-native"
-import { Icon, ListItem, Screen, Text } from "app/components"
-import { colors, spacing } from "../theme"
-import { StructurePathwayStackScreenProps } from "../navigators/MainTabNavigator"
-import { useStores } from "../models"
+import { ListItem, Screen, Text, TitleWithBackButton } from "app/components"
+import { colors, spacing } from "../../theme"
+import { useStores } from "../../models"
 import { fetch } from "react-native-fetch-api"
+import { StructurePathwayStackScreenProps } from "../../navigators/StructurePathwayStackNavigator"
 
 interface StructurePathwayVocabLessonDetailScreenProps extends StructurePathwayStackScreenProps<"DetailVocabLesson"> {
 }
@@ -119,23 +119,12 @@ export const StructurePathwayVocabLessonDetailScreen: FC<StructurePathwayVocabLe
 
   return (
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
-      <View style={$backButtonContainerStyle}>
-        <Icon
-          size={30}
-          color={colors.tint}
-          onPress={() => navigation.goBack()}
-          icon="back"
-          containerStyle={$backIcon}
-        />
-        <View style={$titleContainerStyle}>
-          <Text
-            style={$title}
-            preset="heading"
-            tx={"structurePathway.vocabLesson.title"}
-            txOptions={{ lang: getLearningLanguage, level: route.params.level }}
-          />
-        </View>
-      </View>
+      <TitleWithBackButton
+        title={"structurePathway.vocabLesson.title"}
+        txOptions={{ lang: getLearningLanguage, level: route.params.level }}
+        onPressBackButton={() => navigation.push("VocabLesson", { level: route.params.level })}
+      />
+
       {!loading && <ActivityIndicator />}
 
       {loading && <View>
@@ -183,13 +172,9 @@ const $titleContainerStyle: ViewStyle = {
   justifyContent: "center",
   alignContent: "center",
 }
-const $title: TextStyle = {
-  marginBottom: spacing.lg,
-}
 const $contextTitle: TextStyle = {
   paddingLeft: spacing.md,
 }
-
 const $pleaseWaitText: TextStyle = {
   fontSize: 12,
 }
@@ -206,7 +191,4 @@ const $lessonContainer: ViewStyle = {
   borderRadius: 20,
   marginHorizontal: 10,
   marginBottom: spacing.sm,
-}
-const $backIcon: ViewStyle = {
-  paddingTop: spacing.xxs,
 }

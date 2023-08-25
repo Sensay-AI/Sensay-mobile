@@ -1,13 +1,13 @@
 import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ImageStyle, Platform, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native"
-import { Icon, Screen, Text } from "app/components"
-import { colors, spacing } from "../theme"
-import { StructurePathwayStackScreenProps } from "../navigators/MainTabNavigator"
-import { useStores } from "../models"
+import { Icon, Screen, Text, TitleWithBackButton } from "app/components"
+import { colors, spacing } from "../../theme"
+import { useStores } from "../../models"
 import Autocomplete from "react-native-autocomplete-input"
-import { translate } from "../i18n"
-import { PathwayVocabLessonCategorySnapshotIn } from "../models/StructurePathwayVocabLesson/PathwayVocabLessonCategory"
+import { translate } from "../../i18n"
+import { PathwayVocabLessonCategorySnapshotIn } from "../../models/StructurePathwayVocabLesson/PathwayVocabLessonCategory"
+import { StructurePathwayStackScreenProps } from "../../navigators/StructurePathwayStackNavigator"
 
 interface StructurePathwayVocabLessonScreenProps extends StructurePathwayStackScreenProps<"VocabLesson"> {
 }
@@ -74,22 +74,11 @@ export const StructurePathwayVocabLessonScreen: FC<StructurePathwayVocabLessonSc
 
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
-      <View style={$backButtonContainerStyle}>
-        <Icon
-          size={30}
-          color={colors.tint}
-          onPress={() => navigation.push("StructurePathwaySelectLessonAndLevel")}
-          icon="back"
-        />
-        <View style={$titleContainerStyle}>
-          <Text
-            style={$title}
-            preset="heading"
-            tx={"structurePathway.vocabLesson.title"}
-            txOptions={{ lang: getLearningLanguage, level: route.params.level }}
-          />
-        </View>
-      </View>
+      <TitleWithBackButton
+        title={"structurePathway.vocabLesson.title"}
+        txOptions={{ lang: getLearningLanguage, level: route.params.level }}
+        onPressBackButton={() => navigation.push("StructurePathwaySelectLessonAndLevel")}
+      />
       { Platform.OS === "android" && <Text tx={"structurePathway.vocabLesson.enterTheContext"} />}
       <View style={$container}>
         <View style={$autocompleteContainer}>
@@ -150,26 +139,12 @@ const $screenContainer: ViewStyle = {
   paddingBottom: spacing.xxl,
   paddingHorizontal: spacing.lg,
 }
-const $backButtonContainerStyle: ViewStyle = {
-  flexDirection: "row",
-}
-
 const $autoCompleteContainerStyle: ViewStyle = {
   width: "100%",
 }
-const $titleContainerStyle: ViewStyle = {
-  flexDirection: "row",
-  justifyContent: "center",
-  alignContent: "center",
-}
-const $title: TextStyle = {
-  marginBottom: spacing.lg,
-}
-
 const $sentChat: ImageStyle = {
   marginTop: spacing.xxs,
 }
-
 const $container: ViewStyle = {
   position: "relative",
   backgroundColor: colors.background,
