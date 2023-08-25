@@ -6,52 +6,42 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Icon } from "../components"
 import { translate } from "../i18n"
 import {
-  HomePageScreen,
-  SettingScreen,
-  StructurePathwayLevelScreen,
-  StructurePathwayVocabLessonDetailFromHistoryScreen,
-  StructurePathwayVocabLessonDetailScreen,
-  StructurePathwayVocabLessonScreen,
+  HomePageScreen, SettingScreen,
 } from "../screens"
-import { DemoPodcastListScreen } from "../screens/DemoPodcastListScreen"
 import { colors, spacing, typography } from "../theme"
 import { AppStackParamList, AppStackScreenProps } from "./AppNavigator"
-import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack"
-import { observer } from "mobx-react-lite"
+import {
+  StructurePathwayStack,
+  StructurePathwayStackParamList,
+  StructurePathwayStackScreenProps,
+} from "./StructurePathwayStackNavigator"
+import { ImageLessonStack, ImageLessonStackParamList, ImageLessonStackScreenProps } from "./ImageLessonStackNavigator"
 
 export type MainTabParamList = {
   Setting: undefined
-  DemoPodcastList: undefined
   HomePage: undefined
   StructurePathway: NavigatorScreenParams<StructurePathwayStackParamList>
+  ImageLesson: NavigatorScreenParams<ImageLessonStackParamList>
 }
-export type StructurePathwayStackParamList = {
-  StructurePathwaySelectLessonAndLevel: undefined
-  VocabLesson: {level : number}
-  DetailVocabLesson: {query : string, level: number}
-  DetailVocabLessonFromHistory: {categoryName : string, level: number, categoryId: number, isFromDetailScreen: boolean}
-}
-
-export type StructurePathwayStackScreenProps<T extends keyof StructurePathwayStackParamList> = NativeStackScreenProps<
-  StructurePathwayStackParamList,
-  T
->
 /**
  * Helper for automatically generating navigation prop types for each route.
  *
  * More info: https://reactnavigation.org/docs/typescript/#organizing-types
  */
-export type MainTabScreenProps<T extends keyof MainTabParamList> = CompositeScreenProps<
-  StructurePathwayStackScreenProps<keyof StructurePathwayStackParamList>,
+export type MainTabScreenProps<T extends keyof MainTabParamList> =
   CompositeScreenProps<
-    BottomTabScreenProps<MainTabParamList, T>,
-    AppStackScreenProps<keyof AppStackParamList>
+    ImageLessonStackScreenProps<keyof ImageLessonStackParamList>,
+    CompositeScreenProps<
+      StructurePathwayStackScreenProps<keyof StructurePathwayStackParamList>,
+      CompositeScreenProps<
+        BottomTabScreenProps<MainTabParamList, T>,
+        AppStackScreenProps<keyof AppStackParamList>
+      >
+    >
   >
->
 
 const Tab = createBottomTabNavigator<MainTabParamList>()
 
-const Stack = createNativeStackNavigator<StructurePathwayStackParamList>()
 
 const DebugIcon = ({ focused }) => (
   <Icon icon="settings" color={focused && colors.tint} size={30} />
@@ -64,23 +54,10 @@ const StructurePathwayIcon = ({ focused }) => (
   <Icon icon="pathway" color={focused && colors.tint} size={30} />
 )
 
-const PodcastIcon = ({ focused }) => (
-  <Icon icon="podcast" color={focused && colors.tint} size={30} />
+const ImageLessonIcon = ({ focused }) => (
+  <Icon icon="imageGallery" color={focused && colors.tint} size={30} />
 )
 
-const StructurePathwayStack = observer(function StructurePathwayStack() {
-  return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
-      initialRouteName={"StructurePathwaySelectLessonAndLevel"}
-    >
-      <Stack.Screen name="StructurePathwaySelectLessonAndLevel" component={StructurePathwayLevelScreen} />
-      <Stack.Screen name="VocabLesson" component={StructurePathwayVocabLessonScreen} />
-      <Stack.Screen name="DetailVocabLesson" component={StructurePathwayVocabLessonDetailScreen} />
-      <Stack.Screen name="DetailVocabLessonFromHistory" component={StructurePathwayVocabLessonDetailFromHistoryScreen} />
-    </Stack.Navigator>
-  )
-})
 
 export function MainTabNavigator() {
   const { bottom } = useSafeAreaInsets()
@@ -116,12 +93,11 @@ export function MainTabNavigator() {
       />
 
       <Tab.Screen
-        name="DemoPodcastList"
-        component={DemoPodcastListScreen}
+        name="ImageLesson"
+        component={ImageLessonStack}
         options={{
-          tabBarAccessibilityLabel: translate("demoNavigator.podcastListTab"),
-          tabBarLabel: translate("demoNavigator.podcastListTab"),
-          tabBarIcon: PodcastIcon,
+          tabBarLabel: translate("demoNavigator.imageLesson"),
+          tabBarIcon: ImageLessonIcon,
         }}
       />
 

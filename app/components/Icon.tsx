@@ -121,6 +121,7 @@ export const iconRegistry = {
   speaking: require("../../assets/icons/speaking.png"),
   sentChat: require("../../assets/icons/send-chat.png"),
   reload: require("../../assets/icons/reload.png"),
+  imageGallery: require("../../assets/icons/imageGallery.png"),
 }
 
 const $imageStyle: ImageStyle = {

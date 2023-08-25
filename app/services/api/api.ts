@@ -24,6 +24,7 @@ import {
 import {
   PathwayVocabLessonDetailFromHistorySnapshotIn,
 } from "../../models/StructurePathwayVocabLesson/PathwayVocabLessonDetailFromHistory"
+import { ImageLessonUploadImageSnapshotIn } from "../../models"
 
 /**
  * Configuring the apisauce instance.
@@ -218,6 +219,70 @@ export class Api {
           ...raw,
         }))
       return { kind: "ok", lessonDetail }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${toString(response.data)}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+  async uploadImage(
+    fileName: string,
+    type: string,
+    uri: string
+  ): Promise<{ kind: "ok"; imageUploadResult: ImageLessonUploadImageSnapshotIn } | GeneralApiProblem> {
+    // make the api call
+    const data = new FormData();
+    // @ts-ignore
+    data.append('image_file', {
+      name: fileName,
+      type,
+      uri
+    }
+    );
+    const headers = {
+      'Content-Type': 'multipart/form-data'
+    }
+    const response: ApiResponse<PathwayVocabCategoryHistoryDetailResponse> = await this.apisauce.post(
+      `image`,
+      data,
+      {headers}
+    )
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      console.error(response)
+      if (problem) return problem
+    }
+
+    try {
+      const imageUploadResult: ImageLessonUploadImageSnapshotIn = response.data
+      return { kind: "ok", imageUploadResult }
+    } catch (e) {
+      if (__DEV__) {
+        console.tron.error(`Bad data: ${e.message}\n${toString(response.data)}`, e.stack)
+      }
+      return { kind: "bad-data" }
+    }
+  }
+
+  async getUploadImageHistory(): Promise<{ kind: "ok"; imageUploads: ImageLessonUploadImageSnapshotIn[] } | GeneralApiProblem> {
+    // make the api call
+    const response: ApiResponse<PathwayVocabCategoryHistoryDetailResponse> = await this.apisauce.get(
+      `image`,
+    )
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      console.error(response)
+      if (problem) return problem
+    }
+    try {
+      const rawData = response.data
+      const imageUploads: ImageLessonUploadImageSnapshotIn[] = rawData.items.map(
+        (raw) => ({
+          ...raw,
+        }))
+      return { kind: "ok", imageUploads }
     } catch (e) {
       if (__DEV__) {
         console.tron.error(`Bad data: ${e.message}\n${toString(response.data)}`, e.stack)

@@ -1,23 +1,19 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import {
-  Image,
   ImageBackground,
-  ImageStyle,
   ViewStyle,
   View,
   TextStyle,
   FlatList,
-  Platform,
-
 } from "react-native"
-import { Button, ButtonAccessoryProps, Icon, Screen, Text } from "app/components"
-import { MainTabScreenProps } from "../navigators/MainTabNavigator"
-import { colors, spacing } from "../theme"
-import { stonePath, welcomeLogo } from "../utils/images"
-import { TxKeyPath } from "../i18n"
-import { useStores } from "../models"
-import { notEmpty } from "../utils/notEmpty"
+import { Button, ButtonAccessoryProps, Icon, Screen, SensayAiLanguageInfoTop } from "app/components"
+import { MainTabScreenProps } from "../../navigators/MainTabNavigator"
+import { colors, spacing } from "../../theme"
+import { stonePath } from "../../utils/images"
+import { TxKeyPath } from "../../i18n"
+import { useStores } from "../../models"
+import { notEmpty } from "../../utils/notEmpty"
 
 
 type LessonType = "vocab" | "grammar" | "writing" | "reading" | "listening" | "speaking" | "quest"
@@ -215,15 +211,7 @@ export const StructurePathwayLevelScreen: FC<MainTabScreenProps<"StructurePathwa
 
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
-      <View style={$countryIconButtonContainerStyle}>
-        <Text
-          style={$learningLanguageText}
-          tx={getLearningLanguage ? "structurePathway.levelSelection.learningLanguage" : "structurePathway.levelSelection.selectLearningLanguage"}
-          txOptions={{ lang: getLearningLanguage }}
-          onPress={() => navigation.push("MainTab", { screen: "HomePage" })}
-        />
-      </View>
-      <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
+      <SensayAiLanguageInfoTop onPressText={() => navigation.push("MainTab", { screen: "HomePage" })}/>
       {
         notEmpty(getLearningLanguage) &&
         <View style={$imageBackgroundContainer}>
@@ -252,11 +240,7 @@ const $screenContainer: ViewStyle = {
 const $imageBackgroundContainer: ViewStyle = {
   flex: 1,
 }
-const $welcomeLogo: ImageStyle = {
-  height: 88,
-  width: "100%",
-  // marginBottom: spacing.xxl,
-}
+
 const $imageBackground: ViewStyle = {
   flex: 1,
   height: "100%",
@@ -299,13 +283,4 @@ const $buttonText: TextStyle = {
 }
 const $flatListContentContainer: ViewStyle = {
   paddingHorizontal: spacing.lg,
-}
-const $countryIconButtonContainerStyle: ViewStyle = {
-  flexDirection: "row",
-  justifyContent: "flex-start",
-}
-const $learningLanguageText: TextStyle = {
-  fontWeight: "bold",
-  color: colors.palette.primary400,
-  paddingTop: Platform.OS === "ios" ? spacing.xxs : spacing.xxxs,
 }
