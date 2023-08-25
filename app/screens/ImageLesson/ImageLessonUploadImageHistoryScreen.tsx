@@ -52,6 +52,10 @@ export const ImageLessonUploadImageHistoryScreen: FC<ImageLessonUploadImageHisto
       if (value.kind === "ok" && value.imageUploads.length > 0) {
         const items = value.imageUploads.map((v, i) => {
           return { id: i, src: v.full_url, s3_key_path: v.s3_bucket_path_key, datetime: v.last_modified }
+        }).sort((a, b) => {
+          const dateA = new Date(a.datetime);
+          const dateB = new Date(b.datetime);
+          return -(dateA.getTime() - dateB.getTime());
         })
         setDataSource(items)
         setLoading(false)
