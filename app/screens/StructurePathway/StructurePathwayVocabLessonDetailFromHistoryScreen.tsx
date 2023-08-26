@@ -70,21 +70,20 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
         }}
       />
       <View style={$contextAndReloadContainerStyle}>
-        <View>
+        <View style={$contextTitleContainerStyle}>
           <Text
             tx={"structurePathway.vocabLesson.contextTitle"}
             txOptions={{ context: route.params.categoryName }}
             style={$contextTitle}
           />
         </View>
-        <View>
-        <Icon
-          size={30}
-          color={colors.tint}
-          onPress={loadLesson()}
-          containerStyle={$reloadIcon}
-          icon="reload"
-        />
+        <View style={$reloadIcon}>
+          <Icon
+            size={30}
+            color={colors.tint}
+            onPress={loadLesson()}
+            icon="reload"
+          />
         </View>
       </View>
       <View style={$titleContainerStyle}>
@@ -98,7 +97,7 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
             text={isSeeTranslation ? vocabLessonDetailFromHistory[0].translations[0].translated_text : vocabLessonDetailFromHistory[0].prompt}
             bottomSeparator={true}
             containerStyle={$lessonContainer} />
-          <View style={$reloadIcon}>
+          <View style={$seeTranslationContainer}>
             <Text
               tx={"structurePathway.vocabLesson.seeTranslation"}
               onPress={() => setIsSeeTranslation(!isSeeTranslation)}
@@ -135,20 +134,20 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
       }
 
       {vocabLessonDetailFromHistory?.length === 0 && !loading &&
-      <View>
-        {!loading && <Button
-          style={$button}
-          tx={"structurePathway.vocabLesson.noHistoryFound"}
-          txOptions={{ lang: getLearningLanguage, context: route.params.categoryName }}
-          textStyle={$buttonText}
-          LeftAccessory={CaretRightIcon}
-          onPress={() => navigation.push("DetailVocabLesson", {
-            level: route.params.level,
-            query: route.params.categoryName,
-          })}
-        />}
-        {loading && <ActivityIndicator />}
-      </View>}
+        <View>
+          {!loading && <Button
+            style={$button}
+            tx={"structurePathway.vocabLesson.noHistoryFound"}
+            txOptions={{ lang: getLearningLanguage, context: route.params.categoryName }}
+            textStyle={$buttonText}
+            LeftAccessory={CaretRightIcon}
+            onPress={() => navigation.push("DetailVocabLesson", {
+              level: route.params.level,
+              query: route.params.categoryName,
+            })}
+          />}
+          {loading && <ActivityIndicator />}
+        </View>}
 
     </Screen>
   )
@@ -161,8 +160,7 @@ const $screenContainer: ViewStyle = {
 }
 const $contextAndReloadContainerStyle: ViewStyle = {
   flexDirection: "row",
-  flex: 1,
-  paddingRight: spacing.xxl
+  paddingHorizontal: spacing.md,
 }
 const $titleContainerStyle: ViewStyle = {
   flexDirection: "row",
@@ -209,7 +207,16 @@ const $reloadIcon: ViewStyle = {
   flex: 1,
   flexDirection: "row",
   justifyContent: "flex-end",
+}
+const $seeTranslationContainer: ViewStyle = {
+  flex: 1,
+  flexDirection: "row",
+  justifyContent: "flex-end",
   paddingRight: spacing.md,
+}
+const $contextTitleContainerStyle: ViewStyle = {
+  flexDirection: "row",
+  justifyContent: "flex-start",
 }
 const $contextTitle: TextStyle = {
   paddingLeft: spacing.md,
