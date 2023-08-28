@@ -94,6 +94,7 @@ export const ImageLessonUploadImageHistoryScreen: FC<ImageLessonUploadImageHisto
                   useNativeDriver: true,
                 }).start()
                 isImageWithIdPressActions.set(lastS3Key, false)
+                navigation.push("CaptionGenerationStarter")
               }
               }>
                 <Animated.Image

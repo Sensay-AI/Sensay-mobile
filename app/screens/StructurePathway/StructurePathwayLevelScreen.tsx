@@ -43,6 +43,18 @@ const DATA: LessonMetadata[] = [
     level: 1,
   },
   {
+    lessonName: "structurePathway.levelSelection.vocab2",
+    disable: false,
+    type: "vocab",
+    level: 2,
+  },
+  {
+    lessonName: "structurePathway.levelSelection.vocab3",
+    disable: false,
+    type: "vocab",
+    level: 3,
+  },
+  {
     lessonName: "structurePathway.levelSelection.grammar1",
     disable: true,
     type: "grammar",
@@ -82,12 +94,6 @@ const DATA: LessonMetadata[] = [
     lessonName: "structurePathway.levelSelection.grammar2",
     disable: true,
     type: "grammar",
-    level: 2,
-  },
-  {
-    lessonName: "structurePathway.levelSelection.vocab2",
-    disable: true,
-    type: "vocab",
     level: 2,
   },
   {
@@ -211,7 +217,10 @@ export const StructurePathwayLevelScreen: FC<MainTabScreenProps<"StructurePathwa
 
   return (
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
-      <SensayAiLanguageInfoTop onPressText={() => navigation.push("MainTab", { screen: "HomePage" })}/>
+      <SensayAiLanguageInfoTop
+        onPressText={() => navigation.push("MainTab", { screen: "HomePage" })}
+        isIconOnTopRight={true}
+      />
       {
         notEmpty(getLearningLanguage) &&
         <View style={$imageBackgroundContainer}>

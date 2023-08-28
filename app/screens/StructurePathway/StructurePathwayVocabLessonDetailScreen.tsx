@@ -1,11 +1,13 @@
 import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ActivityIndicator, TextStyle, View, ViewStyle } from "react-native"
+import { ActivityIndicator, Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { ListItem, Screen, Text, TitleWithBackButton } from "app/components"
 import { colors, spacing } from "../../theme"
 import { useStores } from "../../models"
 import { fetch } from "react-native-fetch-api"
 import { StructurePathwayStackScreenProps } from "../../navigators/StructurePathwayStackNavigator"
+import { handleSteamData } from "../../utils/handleSteamData"
+import { levelNumberToText } from "../../utils/stringHelper"
 
 interface StructurePathwayVocabLessonDetailScreenProps extends StructurePathwayStackScreenProps<"DetailVocabLesson"> {
 }
@@ -16,7 +18,9 @@ export const StructurePathwayVocabLessonDetailScreen: FC<StructurePathwayVocabLe
   const { navigation, route } = _props
   const {
     languageSettingStore: { getLearningLanguage, getDisplayLanguage },
-    authenticationStore: { accessToken }, } = useStores()
+    authenticationStore: { accessToken },
+    imageLessonStore: { currentSelectedImage },
+  } = useStores()
   const [lesson, setLesson] = useState("")
   const [loading, setLoading] = useState(false)
   const [isSeeTranslation, setIsSeeTranslation] = useState(false)
@@ -43,29 +47,7 @@ export const StructurePathwayVocabLessonDetailScreen: FC<StructurePathwayVocabLe
         reactNative: { textStreaming: true },
       },
     )
-    const utf8Decoder = new TextDecoder("utf-8")
-    const reader = response.body.getReader()
-    let { value: chunk, done: readerDone } = await reader.read()
-    chunk = chunk ? utf8Decoder.decode(chunk) : ""
-    const newline = /\r?\n/gm
-    let startIndex = 0
-    while (true) {
-      const result = newline.exec(chunk)
-      if (!result) {
-        if (readerDone) break
-        const remainder = chunk.substr(startIndex);
-        ({ value: chunk, done: readerDone } = await reader.read())
-        chunk = remainder + (chunk ? utf8Decoder.decode(chunk) : "")
-        startIndex = newline.lastIndex = 0
-        continue
-      }
-      yield chunk.substring(startIndex, result.index)
-      startIndex = newline.lastIndex
-    }
-    if (startIndex < chunk.length) {
-      // Last line didn't end in a newline char
-      yield chunk.substr(startIndex)
-    }
+    yield* handleSteamData(response)
     setLoading(false)
   }
 
@@ -96,9 +78,9 @@ export const StructurePathwayVocabLessonDetailScreen: FC<StructurePathwayVocabLe
       }
     }
     setLesson(oldString => {
-      const res = oldString.charAt(oldString.length - 1);
-      if (res==="\",") {
-        return oldString.substring(0, oldString.length-2);
+      const res = oldString.charAt(oldString.length - 1)
+      if (res === "\",") {
+        return oldString.substring(0, oldString.length - 2)
       }
       return oldString
     })
@@ -110,6 +92,7 @@ export const StructurePathwayVocabLessonDetailScreen: FC<StructurePathwayVocabLe
         level: route.params.level,
         categoryId: message.category_id,
         isFromDetailScreen: true,
+        isFromImageLesson: route.params.isFromImageLesson,
       })
   }
 
@@ -121,9 +104,15 @@ export const StructurePathwayVocabLessonDetailScreen: FC<StructurePathwayVocabLe
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
       <TitleWithBackButton
         title={"structurePathway.vocabLesson.title"}
-        txOptions={{ lang: getLearningLanguage, level: route.params.level }}
+        txOptions={{ lang: getLearningLanguage, level: levelNumberToText[route.params.level] }}
         onPressBackButton={() => navigation.push("VocabLesson", { level: route.params.level })}
       />
+
+      {route.params.isFromImageLesson && <Image
+        source={{ uri: currentSelectedImage.full_url }}
+        resizeMode={"cover"}
+        style={{ width: "100%", height: undefined, aspectRatio: 1} as ImageStyle}
+      />}
 
       {!loading && <ActivityIndicator />}
 
@@ -136,7 +125,7 @@ export const StructurePathwayVocabLessonDetailScreen: FC<StructurePathwayVocabLe
           />
         </View>
         <View style={$titleContainerStyle}>
-          {loading && <Text>Fetching data...</Text>}
+          {loading && <Text tx={"common.fetchingData"} />}
           {loading && <ActivityIndicator />}
         </View>
 

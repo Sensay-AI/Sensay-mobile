@@ -108,6 +108,12 @@ const EmptyStatePresets = {
     content: translate("emptyStateComponent.generic.content"),
     button: translate("emptyStateComponent.generic.button"),
   },
+  imageCaptionStarter: {
+    imageSource: sadFace,
+    heading: translate("emptyStateComponent.imageCaptionStarter.heading"),
+    content: translate("emptyStateComponent.imageCaptionStarter.content"),
+    button: translate("emptyStateComponent.imageCaptionStarter.button"),
+  },
 } as const
 
 /**

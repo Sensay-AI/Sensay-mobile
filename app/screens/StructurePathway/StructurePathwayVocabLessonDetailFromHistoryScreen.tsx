@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { ActivityIndicator, TextStyle, View, ViewStyle } from "react-native"
+import { ActivityIndicator, Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 import { Button, CaretRightIcon, Icon, ListItem, Screen, Text, TitleWithBackButton } from "app/components"
 import { colors, spacing } from "../../theme"
 import { useStores } from "../../models"
 import { useMap } from "../../utils/useMap"
 import { StructurePathwayStackScreenProps } from "../../navigators/StructurePathwayStackNavigator"
+import { levelNumberToText } from "../../utils/stringHelper"
 
 interface StructurePathwayVocabLessonDetailScreenProps extends StructurePathwayStackScreenProps<"DetailVocabLessonFromHistory"> {
 }
@@ -17,6 +18,7 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
   const {
     languageSettingStore: { getLearningLanguage },
     pathwayVocabLessonStore: { fetchCategoryHistoryDetail, vocabLessonDetailFromHistory },
+    imageLessonStore: { currentSelectedImage },
   } = useStores()
   const [loading, setLoading] = useState(false)
   const [isSeeTranslation, setIsSeeTranslation] = useState(false)
@@ -25,7 +27,9 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
 
   if (vocabLessonDetailFromHistory) {
     try {
-      vocabLessonDetailFromHistory[0].questions.forEach(question => {
+      vocabLessonDetailFromHistory
+        .find(item => item.difficulty_level_id === route.params.level)
+        .questions.forEach(question => {
         question.answers.forEach(answer => {
           initMap.set(answer.id, false)
         })
@@ -61,14 +65,22 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
     <Screen preset="scroll" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
       <TitleWithBackButton
         title={"structurePathway.vocabLesson.title"}
-        txOptions={{ lang: getLearningLanguage, level: route.params.level }}
+        txOptions={{ lang: getLearningLanguage, level: levelNumberToText[route.params.level] }}
         onPressBackButton={() => {
-          if (route.params.isFromDetailScreen) {
+          if (route.params.isFromDetailScreen && !route.params.isFromImageLesson) {
             return navigation.push("VocabLesson", { level: route.params.level })
+          }
+          if (route.params.isFromImageLesson) {
+            return navigation.push("UploadImage")
           }
           return navigation.goBack()
         }}
       />
+      {route.params.isFromImageLesson && <Image
+        source={{ uri: currentSelectedImage.full_url }}
+        resizeMode={"cover"}
+        style={{ width: "100%", height: undefined, aspectRatio: 1} as ImageStyle}
+      />}
       <View style={$contextAndReloadContainerStyle}>
         <View style={$contextTitleContainerStyle}>
           <Text
@@ -87,14 +99,17 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
         </View>
       </View>
       <View style={$titleContainerStyle}>
-        {loading && <Text>Fetching data...</Text>}
+        {loading && <Text tx={"common.fetchingData"}/>}
         {loading && <ActivityIndicator />}
       </View>
 
       {vocabLessonDetailFromHistory?.length > 0 && !loading &&
         <View>
           <ListItem
-            text={isSeeTranslation ? vocabLessonDetailFromHistory[0].translations[0].translated_text : vocabLessonDetailFromHistory[0].prompt}
+            text={isSeeTranslation ?
+              vocabLessonDetailFromHistory.find(item => item.difficulty_level_id === route.params.level)?.translations[0].translated_text
+              : vocabLessonDetailFromHistory.find(item => item.difficulty_level_id === route.params.level)?.prompt
+          }
             bottomSeparator={true}
             containerStyle={$lessonContainer} />
           <View style={$seeTranslationContainer}>
@@ -104,7 +119,10 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
             />
           </View>
 
-          {vocabLessonDetailFromHistory[0].questions.map((question, inx) =>
+          {vocabLessonDetailFromHistory
+            .find(item => item.difficulty_level_id === route.params.level)
+            ?.questions
+            .map((question, inx) =>
             <View key={`${question.id}-${question.prompt_id}`}>
               <ListItem
                 text={`${inx + 1}) ${isSeeTranslation ? question.translations[0].translated_text : question.question_text}`}
@@ -127,6 +145,12 @@ export const StructurePathwayVocabLessonDetailFromHistoryScreen: FC<StructurePat
                 },
               )
               }
+              <View style={$seeTranslationContainer}>
+                <Text
+                  tx={"structurePathway.vocabLesson.seeTranslation"}
+                  onPress={() => setIsSeeTranslation(!isSeeTranslation)}
+                />
+              </View>
             </View>,
           )
           }
@@ -217,6 +241,7 @@ const $seeTranslationContainer: ViewStyle = {
 const $contextTitleContainerStyle: ViewStyle = {
   flexDirection: "row",
   justifyContent: "flex-start",
+  flex: 12,
 }
 const $contextTitle: TextStyle = {
   paddingLeft: spacing.md,
