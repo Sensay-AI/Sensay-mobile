@@ -2,6 +2,7 @@ import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navig
 import { observer } from "mobx-react-lite"
 import { colors } from "../theme"
 import {
+  ImageLessonUploadImageScreen,
   StructurePathwayLevelScreen, StructurePathwayVocabLessonDetailFromHistoryScreen,
   StructurePathwayVocabLessonDetailScreen,
   StructurePathwayVocabLessonScreen,
@@ -11,8 +12,9 @@ import React from "react"
 export type StructurePathwayStackParamList = {
   StructurePathwaySelectLessonAndLevel: undefined
   VocabLesson: { level: number }
-  DetailVocabLesson: { query: string, level: number }
-  DetailVocabLessonFromHistory: { categoryName: string, level: number, categoryId: number, isFromDetailScreen: boolean }
+  DetailVocabLesson: { query: string, level: number, isFromImageLesson?: boolean }
+  DetailVocabLessonFromHistory: { categoryName: string, level: number, categoryId: number, isFromDetailScreen: boolean, isFromImageLesson?: boolean }
+  UploadImage: undefined
 }
 
 export type StructurePathwayStackScreenProps<T extends keyof StructurePathwayStackParamList> = NativeStackScreenProps<
@@ -35,6 +37,8 @@ export const StructurePathwayStack = observer(function StructurePathwayStack() {
                     component={StructurePathwayVocabLessonDetailScreen} />
       <Stack.Screen name="DetailVocabLessonFromHistory"
                     component={StructurePathwayVocabLessonDetailFromHistoryScreen} />
+      <Stack.Screen name="UploadImage"
+                    component={ImageLessonUploadImageScreen} />
     </Stack.Navigator>
   )
 })

@@ -3,7 +3,8 @@ const en = {
     ok: "OK!",
     cancel: "Cancel",
     back: "Back",
-    logOut: "Log Out", // @demo remove-current-line
+    logOut: "Log Out",
+    fetchingData: "Fetching data...",
   },
   welcomeScreen: {
     postscript:
@@ -22,7 +23,7 @@ const en = {
     friendlySubtitle:
       "This is the screen that your users will see in production when an error is thrown. You'll want to customize this message (located in `app/i18n/en.ts`) and probably the layout as well (`app/screens/ErrorScreen`). If you want to remove this entirely, check `app/app.tsx` for the <ErrorBoundary> component.",
     reset: "RESET APP",
-    traceTitle: "Error from %{name} stack", // @demo remove-current-line
+    traceTitle: "Error from %{name} stack",
   },
   emptyStateComponent: {
     generic: {
@@ -30,8 +31,12 @@ const en = {
       content: "No data found yet. Try clicking the button to refresh or reload the app.",
       button: "Let's try this again",
     },
+    imageCaptionStarter: {
+      heading: "No image found Error",
+      content: "Try clicking the button to choose image again.",
+      button: "Let's try again!",
+    },
   },
-  // @demo remove-block-start
   errors: {
     invalidEmail: "must be a valid email address.",
     blankText: "can't be blank",
@@ -105,19 +110,20 @@ const en = {
     levelSelection: {
       learningLanguage: "Learning: {{lang}}",
       selectLearningLanguage: "Click here to select language you want to learn!",
-      vocab1: "Vocab 1",
-      grammar1: "Grammar 1",
-      writing1: "Writing 1",
-      reading1: "Reading 1",
-      listening1: "Listening 1",
-      speaking1: "Speaking 1",
+      vocab1: "Vocab Easy",
+      grammar1: "Grammar Easy",
+      writing1: "Writing Easy",
+      reading1: "Reading Easy",
+      listening1: "Listening Easy",
+      speaking1: "Speaking Easy",
       quest1: "Quest 1",
-      grammar2: "Grammar 2",
-      vocab2: "Vocab 2",
-      writing2: "Writing 3",
+      grammar2: "Grammar Intermediate",
+      vocab2: "Vocab Intermediate",
+      writing2: "Writing Advanced",
+      vocab3: "Vocab Advanced",
     },
     vocabLesson: {
-      title: "{{lang}} Vocab Lesson {{level}}",
+      title: "{{lang}} Vocab {{level}} Lesson",
       enterTheContext: "Choose or enter the context you want to learn",
       autoCompletePlaceholderLoading: "Loading data...",
       autoCompletePlaceholderAfterLoading: "Enter a context you want to learn",
@@ -132,10 +138,17 @@ const en = {
       introduction: "Upload an image or choose one from the library. Get a personalized lesson in seconds!",
       uploadImageOption: "Take a photo",
       chooseFromGalleryOption: "Choose from your Gallery!",
-      showUploadHistoryOption: "See my image upload history",
+      showUploadHistoryOption: "Select from my image upload history",
     },
     uploadImageHistory: {
       title: "Image Lesson Upload History",
+    },
+    captionGenerationStarter: {
+      title: "Image Lesson",
+      pleaseWait: "Please wait a little bit for loading the image caption.",
+      vocabLessonEasy: "Start Easy Vocab Lesson with this Image",
+      vocabLessonIntermediate: "Start Intermediate Vocab Lesson with this Image",
+      vocabLessonAdvanced: "Start Advanced Vocab Lesson with this Image"
     },
   },
 

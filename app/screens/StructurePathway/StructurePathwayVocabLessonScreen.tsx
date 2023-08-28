@@ -8,6 +8,7 @@ import Autocomplete from "react-native-autocomplete-input"
 import { translate } from "../../i18n"
 import { PathwayVocabLessonCategorySnapshotIn } from "../../models/StructurePathwayVocabLesson/PathwayVocabLessonCategory"
 import { StructurePathwayStackScreenProps } from "../../navigators/StructurePathwayStackNavigator"
+import { levelNumberToText } from "../../utils/stringHelper"
 
 interface StructurePathwayVocabLessonScreenProps extends StructurePathwayStackScreenProps<"VocabLesson"> {
 }
@@ -76,7 +77,7 @@ export const StructurePathwayVocabLessonScreen: FC<StructurePathwayVocabLessonSc
     <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
       <TitleWithBackButton
         title={"structurePathway.vocabLesson.title"}
-        txOptions={{ lang: getLearningLanguage, level: route.params.level }}
+        txOptions={{ lang: getLearningLanguage, level: levelNumberToText[route.params.level] }}
         onPressBackButton={() => navigation.push("StructurePathwaySelectLessonAndLevel")}
       />
       { Platform.OS === "android" && <Text tx={"structurePathway.vocabLesson.enterTheContext"} />}

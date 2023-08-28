@@ -23,3 +23,12 @@ npm run ios
 ```shell
 npm run ios
 ```
+## Useful command
+1. adb reverse proxy
+```shell
+adb reverse tcp:5000 tcp:5000
+```
+or
+```shell
+adb -s emulator-5554 reverse tcp:5000 tcp:5000
+```

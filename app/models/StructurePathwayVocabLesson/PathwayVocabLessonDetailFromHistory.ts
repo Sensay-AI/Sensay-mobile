@@ -17,7 +17,7 @@ export const PathwayVocabLessonDetailFromHistoryModel = types
     created_at: types.string,
     updated_at: types.string,
     category_id: types.number,
-    level: types.number,
+    difficulty_level_id: types.number,
     language_id: types.number,
     questions: types.array(PathwayVocabLessonGeneratedQuestionsModel),
     language: types.maybe(PathwayVocabLessonLanguageModel),

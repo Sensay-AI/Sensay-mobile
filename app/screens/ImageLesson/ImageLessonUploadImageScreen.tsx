@@ -91,9 +91,11 @@ export const ImageLessonUploadImageScreen: FC<MainTabScreenProps<"ImageLesson">>
     const handleOnPress = async (type: UploadImageType) => {
       switch (type) {
         case "chooseFromGallery":
-          return await launchImageLibraryPicker()
+          await launchImageLibraryPicker()
+          return navigation.push("CaptionGenerationStarter")
         case "takeAPhoto":
-          return await launchUserPhoneCamera()
+          await launchUserPhoneCamera()
+          return navigation.push("CaptionGenerationStarter")
         case "chooseFromHistory":
           return navigation.push("UploadImageHistory")
       }
