@@ -3,10 +3,13 @@
 import App from "./app/app.tsx"
 import React from "react"
 import { registerRootComponent } from "expo"
-import { Platform } from "react-native"
+import { LogBox, Platform } from "react-native"
 import * as SplashScreen from "expo-splash-screen"
 
 SplashScreen.preventAutoHideAsync()
+
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();
 
 function IgniteApp() {
   return <App hideSplashScreen={SplashScreen.hideAsync} />
