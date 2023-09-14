@@ -7,6 +7,9 @@ import en, { Translations } from "./en"
 import ar from "./ar"
 import ko from "./ko"
 import vi from "./vi"
+import fr from "./fr"
+import th from "./th"
+import ja from "./ja"
 
 i18n.fallbacks = true
 /**
@@ -14,7 +17,7 @@ i18n.fallbacks = true
  * the language code is the suffixed with "-US". i.e. if a device is set to English ("en"),
  * if you change to another language and then return to English language code is now "en-US".
  */
-i18n.translations = { ar, en, "en-US": en, ko, vi }
+i18n.translations = { ar, en, "en-US": en, ko, vi, fr, th, ja }
 
 i18n.locale = Localization.locale
 

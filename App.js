@@ -8,8 +8,8 @@ import * as SplashScreen from "expo-splash-screen"
 
 SplashScreen.preventAutoHideAsync()
 
-LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
-LogBox.ignoreAllLogs();
+LogBox.ignoreLogs([/^.*$/]); // Ignore log notification by message
+LogBox.ignoreAllLogs(true);
 
 function IgniteApp() {
   return <App hideSplashScreen={SplashScreen.hideAsync} />

@@ -8,6 +8,7 @@ import { fetch } from "react-native-fetch-api"
 import { StructurePathwayStackScreenProps } from "../../navigators/StructurePathwayStackNavigator"
 import { handleSteamData } from "../../utils/handleSteamData"
 import { levelNumberToText } from "../../utils/stringHelper"
+import Config from "../../config"
 
 interface StructurePathwayVocabLessonDetailScreenProps extends StructurePathwayStackScreenProps<"DetailVocabLesson"> {
 }
@@ -27,7 +28,7 @@ export const StructurePathwayVocabLessonDetailScreen: FC<StructurePathwayVocabLe
 
   async function* fetchData() {
     setLoading(true)
-    const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}lesson/vocabulary/question`,
+    const response = await fetch(`${Config.API_URL}lesson/vocabulary/question`,
       {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         headers: {
@@ -67,7 +68,7 @@ export const StructurePathwayVocabLessonDetailScreen: FC<StructurePathwayVocabLe
         console.debug("first line", line)
         console.debug("lineCount:", lineCount)
       }
-      if (line.includes("questions")) {
+      if (line.includes("\"questions\":")) {
         isQuestionAppear = !isQuestionAppear
       }
       if (isLessonAppear && !isQuestionAppear) {

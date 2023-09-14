@@ -364,5 +364,5 @@ export const languagesCountryCodeToId: { [key: string]: number } = Object.keys(l
 
 export const acceptLanguageCountryCode= items[0].children.map(lang => lang.countryCode.toUpperCase()) as CountryCode[]
 
-export type DisplayLanguage = "vietnamese" | "english" | "korean" | "arabic"
-export const allowLanguagePrefix = ["en", "vi", "ko", "ar"]
+export type DisplayLanguage = "vietnamese" | "english" | "korean" | "arabic" | "french" | "japanese" | "thai"
+export const allowLanguagePrefix = ["en", "vi", "ko", "ar", "ja", "fr", "th"]

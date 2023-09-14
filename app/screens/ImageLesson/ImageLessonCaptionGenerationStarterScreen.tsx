@@ -16,6 +16,7 @@ import { handleSteamData } from "../../utils/handleSteamData"
 import { fetch } from "react-native-fetch-api"
 import { capitalizeFirstLetter } from "../../utils/stringHelper"
 import { notEmpty } from "../../utils/notEmpty"
+import Config from "../../config"
 
 
 interface ImageLessonCaptionGenerationStarterScreenProps extends MainTabScreenProps<"ImageLesson"> {
@@ -38,7 +39,7 @@ export const ImageLessonCaptionGenerationStarterScreen: FC<ImageLessonCaptionGen
 
   async function* fetchData() {
     setLoading(true)
-    const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}image/caption`,
+    const response = await fetch(`${Config.API_URL}image/caption`,
       {
         method: "POST",
         headers: {

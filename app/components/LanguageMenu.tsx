@@ -54,6 +54,24 @@ export const LanguageMenu = observer(function LanguageMenu(props: LanguageMenuPr
       forceUpdateHook()
       closeLanguageMenu()
     }),
+    new MenuItem("french", () => {
+      i18n.locale = "fr"
+      setDisplayLanguage("french")
+      forceUpdateHook()
+      closeLanguageMenu()
+    }),
+    new MenuItem("japanese", () => {
+      i18n.locale = "ja"
+      setDisplayLanguage("japanese")
+      forceUpdateHook()
+      closeLanguageMenu()
+    }),
+    new MenuItem("thai", () => {
+      i18n.locale = "th"
+      setDisplayLanguage("thai")
+      forceUpdateHook()
+      closeLanguageMenu()
+    }),
   ]
   return (
     <View style={$styles}>

@@ -2,122 +2,175 @@ import { Translations } from "./en"
 
 const ar: Translations = {
   common: {
-    ok: "نعم",
-    cancel: "حذف",
-    back: "خلف",
-    logOut: "تسجيل خروج", // @demo remove-current-line
+    ok: "موافق!",
+    cancel: "إلغاء",
+    back: "رجوع",
+    logOut: "تسجيل الخروج",
+    fetchingData: "جاري جلب البيانات...",
   },
   welcomeScreen: {
     postscript:
-      "ربما لا يكون هذا هو الشكل الذي يبدو عليه تطبيقك مالم يمنحك المصمم هذه الشاشات وشحنها في هذه الحالة",
-    readyForLaunch: "تطبيقك تقريبا جاهز للتشغيل",
-    exciting: "اوه هذا مثير",
-    letsGo: "لنذهب", // @demo remove-current-line
+      "اكتشف SensayAI، تطبيق تعلم اللغات الخاص بك بدعم من الذكاء الاصطناعي. دروس شخصية، تمارين تفاعلية، ومجتمع عالمي. اتقن اللغات بسهولة. ابدأ اليوم!",
+    readyForLaunch: "تطبيقك، جاهز تقريبًا للإطلاق!",
+    exciting: "(أوه، هذا مثير للغاية!)",
+    letsGo: "لنذهب!",
+    helloUser: "مرحبًا، {{userName}}!",
+    createProfile: "إنشاء ملف التعريف",
+    snackBar: {
+      cantConnect: "لا يمكن الاتصال، خادمنا يواجه حاليًا بعض المشكلات!"
+    }
   },
   errorScreen: {
-    title: "هناك خطأ ما",
+    title: "حدث خطأ!",
     friendlySubtitle:
-      "هذه هي الشاشة التي سيشاهدها المستخدمون في عملية الانتاج عند حدوث خطأ. سترغب في تخصيص هذه الرسالة ( الموجودة في 'ts.en/i18n/app') وربما التخطيط ايضاً ('app/screens/ErrorScreen'). إذا كنت تريد إزالة هذا بالكامل، تحقق من 'app/app.tsp' من اجل عنصر <ErrorBoundary>.",
-    reset: "اعادة تعيين التطبيق",
-    traceTitle: "خطأ من مجموعة %{name}", // @demo remove-current-line
+      "هذه هي الشاشة التي سيراها مستخدموك في الإنتاج عند حدوث خطأ. سترغب في تخصيص هذه الرسالة (التي توجد في `app/i18n/en.ts`) وربما التصميم أيضًا (الموجود في `app/screens/ErrorScreen`). إذا كنت ترغب في إزالتها بالكامل، تحقق من `app/app.tsx` لمكون <ErrorBoundary>.",
+    reset: "إعادة تعيين التطبيق",
+    traceTitle: "خطأ من مكدس %{name}",
   },
   emptyStateComponent: {
     generic: {
-      heading: "فارغة جداً....حزين",
-      content: "لا توجد بيانات حتى الآن. حاول النقر فوق الزر لتحديث التطبيق او اعادة تحميله.",
-      button: "لنحاول هذا مرّة أخرى",
+      heading: "فارغ جدًا... حزين جدًا",
+      content: "لم يتم العثور على بيانات بعد. حاول النقر على الزر للتحديث أو إعادة تحميل التطبيق.",
+      button: "لنجرب مرة أخرى",
+    },
+    imageCaptionStarter: {
+      heading: "خطأ في العثور على صورة",
+      content: "حاول النقر على الزر لاختيار الصورة مرة أخرى.",
+      button: "لنجرب مرة أخرى!",
     },
   },
-  // @demo remove-block-start
   errors: {
-    invalidEmail: "عنوان البريد الالكتروني غير صالح",
+    invalidEmail: "يجب أن يكون عنوان البريد الإلكتروني صالحًا.",
+    blankText: "لا يمكن أن يكون فارغًا",
+    emailLength: "يجب أن يتكون البريد الإلكتروني من ما لا يقل عن 6 أحرف"
   },
   loginScreen: {
     signIn: "تسجيل الدخول",
+    signUp: "التسجيل",
+    forgotPassword: "نسيت كلمة المرور",
     enterDetails:
-      ".ادخل التفاصيل الخاصة بك ادناه لفتح معلومات سرية للغاية. لن تخمن ابداً ما الذي ننتظره. او ربما ستفعل انها انها ليست علم الصواريخ",
-    emailFieldLabel: "البريد الالكتروني",
-    passwordFieldLabel: "كلمة السر",
-    emailFieldPlaceholder: "ادخل بريدك الالكتروني",
-    passwordFieldPlaceholder: "كلمة السر هنا فائقة السر",
-    tapToSignIn: "انقر لتسجيل الدخول!",
-    hint: "(: تلميح: يمكنك استخدام اي عنوان بريد الكتروني وكلمة السر المفضلة لديك",
+      "أدخل تفاصيلك أدناه لفتح المعلومات السرية العليا. لن تخمن أبدًا ماذا لدينا في الانتظار. أو ربما ستخمن ذلك. إنها ليست فيزياء روكت هنا.",
+    emailFieldLabel: "البريد الإلكتروني",
+    passwordFieldLabel: "كلمة المرور",
+    emailFieldPlaceholder: "أدخل عنوان البريد الإلكتروني الخاص بك",
+    passwordFieldPlaceholder: "كلمة المرور السرية هنا",
+    tapToSignIn: "تسجيل الدخول",
+    hint: "تلميح: يمكنك استخدام أي عنوان بريد إلكتروني وكلمة مرور مفضلة لديك :)",
+    continueWithFacebook: "المتابعة مع Facebook",
+    continueWithGoogle: "المتابعة مع Google",
+    continueWithApple: "المتابعة مع Apple",
   },
-  demoNavigator: {
-    componentsTab: "عناصر",
-    settingTab: "تصحيح",
-    communityTab: "واصل اجتماعي",
-    podcastListTab: "البودكاست",
-  },
-  demoCommunityScreen: {
-    title: "تواصل مع المجتمع",
-    tagLine:
-      "قم بالتوصيل لمنتدى Infinite Red الذي يضم تفاعل المهندسين المحلّيين ورفع مستوى تطوير تطبيقك معنا",
-    joinUsOnSlackTitle: "انضم الينا على Slack",
-    joinUsOnSlack:
-      "هل ترغب في وجود مكان للتواصل مع مهندسي React Native حول العالم؟ الانضمام الى المحادثة في سلاك المجتمع الاحمر اللانهائي! مجتمعناالمتنامي هو مساحةآمنة لطرح الاسئلة والتعلم من الآخرين وتنمية شبكتك.",
-    joinSlackLink: "انضم الي مجتمع Slack",
-    makeIgniteEvenBetterTitle: "اجعل Ignite افضل",
-    makeIgniteEvenBetter:
-      "هل لديك فكرة لجعل Ignite افضل؟ نحن سعداء لسماع ذلك! نحن نبحث دائماً عن الآخرين الذين يرغبون في مساعدتنا في بناء افضل الادوات المحلية التفاعلية المتوفرة هناك. انضم الينا عبر GitHub للانضمام الينا في بناء مستقبل Ignite",
-    contributeToIgniteLink: "ساهم في Ignite",
-    theLatestInReactNativeTitle: "الاحدث في React Native",
-    theLatestInReactNative: "نخن هنا لنبقيك محدثاً على جميع React Native التي تعرضها",
-    reactNativeRadioLink: "راديو React Native",
-    reactNativeNewsletterLink: "نشرة اخبار React Native",
-    reactNativeLiveLink: "مباشر React Native",
-    chainReactConferenceLink: "مؤتمر Chain React",
-    hireUsTitle: "قم بتوظيف Infinite Red لمشروعك القادم",
-    hireUs:
-      "سواء كان الامر يتعلّق بتشغيل مشروع كامل او اعداد الفرق بسرعة من خلال التدريب العلمي لدينا، يمكن ان يساعد Infinite Red اللامتناهي في اي مشروع محلي يتفاعل معه.",
-    hireUsLink: "ارسل لنا رسالة",
-  },
-  demoShowroomScreen: {
-    jumpStart: "مكونات او عناصر لبدء مشروعك",
-    lorem2Sentences:
-      "عامل الناس بأخلاقك لا بأخلاقهم. عامل الناس بأخلاقك لا بأخلاقهم. عامل الناس بأخلاقك لا بأخلاقهم",
-    demoHeaderTxExample: "ياي",
-    demoViaTxProp: "عبر `tx` Prop",
-    demoViaSpecifiedTxProp: "Prop `{{prop}}Tx` عبر",
-  },
-  demoDebugScreen: {
-    howTo: "كيف",
-    title: "التصحيح",
-    tagLine: "مبروك، لديك نموذج اصلي متقدم للغاية للتفاعل هنا. الاستفادة من هذه النمذجة",
-    reactotron: "Reactotron ارسل إلى",
-    reportBugs: "الابلاغ عن اخطاء",
-    demoList: "قائمة تجريبية",
-    demoPodcastList: "قائمة البودكاست التجريبي",
-    androidReactotronHint:
-      "اذا لم ينجح ذللك، فتأكد من تشغيل تطبيق الحاسوب الخاص Reactotron، وقم بتشغيل عكس adb tcp:9090 \ntcp:9090 من جهازك الطرفي ، واعد تحميل التطبيق",
-    iosReactotronHint:
-      "اذا لم ينجح ذلك، فتأكد من تشغيل تطبيق الحاسوب الخاص ب Reactotron وأعد تحميل التطبيق",
-    macosReactotronHint: "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
-    webReactotronHint: "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
-    windowsReactotronHint:
-      "اذا لم ينجح ذلك، فتأكد من تشغيل الحاسوب ب Reactotron وأعد تحميل التطبيق",
-  },
-  demoPodcastListScreen: {
-    title: "حلقات إذاعية React Native",
-    onlyFavorites: "المفضلة فقط",
-    favoriteButton: "المفضل",
-    unfavoriteButton: "غير مفضل",
-    accessibility: {
-      cardHint: "انقر مرّتين للاستماع على الحلقة. انقر مرّتين وانتظر لتفعيل {{action}} هذه الحلقة.",
-      switch: "قم بالتبديل لاظهار المفضّلة فقط.",
-      favoriteAction: "تبديل المفضلة",
-      favoriteIcon: "الحلقة الغير مفضّلة",
-      unfavoriteIcon: "الحلقة المفضّلة",
-      publishLabel: "نشرت {{date}}",
-      durationLabel: "المدّة: {{hours}} ساعات {{minutes}} دقائق {{seconds}} ثواني",
+  updateProfileScreen: {
+    changeAvatar: "تغيير الصورة الرمزية",
+    email: "عنوان البريد الإلكتروني",
+    name: "الاسم",
+    nickName: "اسم العرض",
+    dateOfBirth: "تاريخ الميلاد (MM/DD/YYYY)",
+    country: "البلد",
+    countryPlaceholder: "انقر هنا لاختيار جنسيتك",
+    phoneNumber: "رقم الهاتف",
+    yourLanguage: "لغتك",
+    languageListHeader: "اللغات (يمكنك اختيار أكثر من واحدة)",
+    userName: "اسم المستخدم الخاص بك",
+    gender: {
+      header: "الجنس",
+      male: "ذكر",
+      female: "أنثى",
+      other: "آخر",
+      preferNotToSay: "أفضل عدم القول"
     },
-    noFavoritesEmptyState: {
-      heading: "هذا يبدو فارغاً بعض الشيء.",
-      content:
-        "لم تتم اضافة اي مفضلات حتى الان. اضغط على القلب في إحدى الحلقات لإضافته الى المفضلة.",
+    validation: {
+      email: "الرجاء إدخال عنوان بريد إلكتروني صالح",
+      emailRequire: "البريد الإلكتروني مطلوب*",
+      duplicatedEmail: "الفعل، يرجى تغييرههذا البريد الإلكتروني مسجل ب",
+      fullNameRequire: "الاسم الكامل مطلوب*",
+      dateOfBirthRequire: "تاريخ الميلاد مطلوب*",
+      minDateOfBirth: "الرجاء تحديد تاريخ بعد 1/1/1900",
+      countryRequire: "البلد مطلوب*",
+      languagesRequire: "اللغات مطلوبة*",
+      minLanguages: "يجب اختيار لغة واحدة على الأقل",
+      nickNameRequire: "اسم العرض مطلوب*",
+      genderRequire: "الجنس مطلوب*",
+      phoneNumberValid: "الرجاء إدخال رقم هاتف صالح",
+      phoneNumberRequire: "رقم الهاتف مطلوب*",
+      duplicatedPhoneNumber: "هذا الرقم الهاتف مسجل بالفعل، الرجاء تغييره"
+    },
+    snackBar: {
+      updateSuccess: "تحديث الملف الشخصي بنجاح",
+      retryLabel: "إعادة المحاولة",
+    }
+  },
+  homePage: {
+    displayLanguage: "لغة العرض:",
+    learningLanguage: "تعلم:",
+    selectLearningLanguage: "اختر لغة للتعلم:",
+    countrySpeakingThatLanguage: "البلد الذي يتحدث اللغة {{lang}}",
+    startStructurePathway: "ابدأ التعلم باللغة {{lang}} مع دروس المنهجية",
+    imageLesson: "ابدأ التعلم باللغة {{lang}} مع دروس الصور"
+  },
+  structurePathway: {
+    levelSelection: {
+      learningLanguage: "تعلم: {{lang}}",
+      selectLearningLanguage: "انقر هنا لاختيار اللغة التي ترغب في تعلمها!",
+      vocab1: "مفردات سهلة",
+      grammar1: "قواعد اللغة سهلة",
+      writing1: "كتابة سهلة",
+      reading1: "قراءة سهلة",
+      listening1: "استماع سهل",
+      speaking1: "التحدث سهل",
+      quest1: "مهمة 1",
+      grammar2: "قواعد اللغة متوسطة",
+      vocab2: "مفردات متوسطة",
+      writing2: "كتابة متقدمة",
+      vocab3: "مفردات متقدمة",
+    },
+    vocabLesson: {
+      title: "درس المفردات {{lang}} المستوى {{level}}",
+      enterTheContext: "اختر أو أدخل السياق الذي تريد تعلمه",
+      autoCompletePlaceholderLoading: "جاري تحميل البيانات...",
+      autoCompletePlaceholderAfterLoading: "أدخل السياق الذي تريد تعلمه",
+      contextTitle: "السياق: {{context}}",
+      seeTranslation: "عرض الترجمة",
+      pleaseWait: "يرجى الانتظار قليلاً لتحميل الأسئلة والترجمة.",
+      noHistoryFound: "لم يتم العثور على سجل للسياق: {{context}} في تاريخ تعلمك {{lang}}, انقر هنا لإنشاء درس جديد مع السياق: {{context}} لتعلم اللغة {{lang}}!!",
     },
   },
-  // @demo remove-block-end
-}
+  imageLessonScreen: {
+    uploadImage: {
+      introduction: "قم بتحميل صورة أو اختر واحدة من المكتبة. احصل على درس شخصي في ثوانٍ!",
+      uploadImageOption: "التقاط صورة",
+      chooseFromGalleryOption: "اختيار من معرض الصور الخاص بك!",
+      showUploadHistoryOption: "اختيار من تاريخ تحميل الصور الخاص بي",
+    },
+    uploadImageHistory: {
+      title: "تاريخ تحميل دروس الصور",
+    },
+    captionGenerationStarter: {
+      title: "درس الصور",
+      pleaseWait: "الرجاء الانتظار قليلاً لتحميل وصف الصورة.",
+      vocabLessonEasy: "ابدأ درس مفردات سهل مع هذه الصورة",
+      vocabLessonIntermediate: "ابدأ درس مفردات متوسط مع هذه الصورة",
+      vocabLessonAdvanced: "ابدأ درس مفردات متقدم مع هذه الصورة"
+    },
+  },
 
+  demoNavigator: {
+    componentsTab: "المكونات",
+    settingTab: "الإعدادات",
+    podcastListTab: "البودكاست",
+    overviewTab: "نظرة عامة",
+    statisticsTab: "الإحصائيات",
+    devicesTab: "الأجهزة",
+    settingsTab: "الإعدادات",
+    homeTab: "الصفحة الرئيسية",
+    structurePathway: "المسار",
+    imageLesson: "الصور",
+  },
+  settingScreen: {
+    title: "الإعدادات",
+    reportBugs: "الإبلاغ عن الأخطاء",
+    editProfile: "تحرير الملف الشخصي",
+    giveFeedback: "تقديم ملاحظات",
+  },
+}
 export default ar
